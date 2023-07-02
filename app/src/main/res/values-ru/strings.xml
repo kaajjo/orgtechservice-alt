@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Orgtechservice</string>
+    <string name="login_label">Логин</string>
+    <string name="password_label">Пароль</string>
+</resources>
