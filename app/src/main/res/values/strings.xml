@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name" translatable="false">Orgtechservice</string>
+    <string name="login_label">Логин</string>
+    <string name="password_label">Пароль</string>
+    <string name="login">Войти</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="hello_user_morning">Доброе утро, %1$s!</string>
+    <string name="hello_user_day">Добрый день, %1$s!</string>
+    <string name="hello_user_evening">Добрый вечер, %1$s!</string>
+</resources>
