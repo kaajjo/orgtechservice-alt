@@ -1,39 +1,46 @@
 package com.kaajjo.orgtechservice.ui.screen.home
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.ArrowForwardIos
+import androidx.compose.material.icons.rounded.Bolt
+import androidx.compose.material.icons.rounded.CloudDownload
+import androidx.compose.material.icons.rounded.List
+import androidx.compose.material.icons.rounded.Lock
+import androidx.compose.material.icons.rounded.Videocam
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kaajjo.orgtechservice.R
-import com.kaajjo.orgtechservice.data.remote.dto.Account
-import com.kaajjo.orgtechservice.data.remote.dto.Tariff
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import korlibs.time.DateTime
-import kotlin.math.roundToInt
 
 @Destination
 @Composable
@@ -115,13 +122,84 @@ fun HomeScreen(
                         Spacer(Modifier.width(8.dp))
                         FilledIconButton(onClick = { /*TODO*/ }) {
                             Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
-                        } }
+                        }
+                    }
                 }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+        LazyColumn(
+            contentPadding = PaddingValues(horizontal = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            item {
+                DashboardItem(
+                    icon = Icons.Rounded.List,
+                    title = "Мой тариф",
+                    trailingIcon = Icons.Rounded.ArrowForwardIos
+                )
+            }
+            item {
+                DashboardItem(
+                    icon = Icons.Rounded.Videocam,
+                    title = "Камеры",
+                    trailingIcon = Icons.Rounded.ArrowForwardIos
+                )
+            }
+            item {
+                DashboardItem(
+                    icon = Icons.Rounded.Lock,
+                    title = "Блокировка",
+                    trailingIcon = Icons.Rounded.ArrowForwardIos
+                )
+            }
+            item {
+                DashboardItem(
+                    icon = Icons.Rounded.CloudDownload,
+                    title = "Расход трафика",
+                    trailingIcon = Icons.Rounded.ArrowForwardIos
+                )
+            }
+            item {
+                DashboardItem(
+                    icon = Icons.Rounded.Bolt,
+                    title = "Турбо режим",
+                    trailingIcon = Icons.Rounded.ArrowForwardIos
+                )
             }
         }
     }
 }
 
+@Composable
+fun DashboardItem(
+    icon: ImageVector,
+    title: String,
+    trailingIcon: ImageVector,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(MaterialTheme.shapes.medium)
+            .background(MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp))
+            .clickable { }
+            .padding(horizontal = 12.dp, vertical = 16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(imageVector = icon, contentDescription = null)
+            Spacer(modifier = Modifier.width(12.dp))
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleLarge
+            )
+        }
+        Icon(imageVector = trailingIcon, contentDescription = null)
+    }
+}
 
 @Composable
 fun AccountInfoCardItem(
