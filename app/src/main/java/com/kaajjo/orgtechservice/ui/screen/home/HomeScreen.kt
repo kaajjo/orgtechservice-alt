@@ -20,6 +20,7 @@ import androidx.compose.material.icons.rounded.Bolt
 import androidx.compose.material.icons.rounded.CloudDownload
 import androidx.compose.material.icons.rounded.List
 import androidx.compose.material.icons.rounded.Lock
+import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.Videocam
 import androidx.compose.material3.Divider
 import androidx.compose.material3.FilledIconButton
@@ -38,6 +39,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kaajjo.orgtechservice.R
+import com.kaajjo.orgtechservice.ui.screen.destinations.AccountScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import korlibs.time.DateTime
@@ -142,6 +144,14 @@ fun HomeScreen(
             }
             item {
                 DashboardItem(
+                    icon = Icons.Rounded.Person,
+                    title = "Аккаунт",
+                    trailingIcon = Icons.Rounded.ArrowForwardIos,
+                    onClick = { destinationsNavigator.navigate(AccountScreenDestination)}
+                )
+            }
+            item {
+                DashboardItem(
                     icon = Icons.Rounded.Videocam,
                     title = "Камеры",
                     trailingIcon = Icons.Rounded.ArrowForwardIos
@@ -177,14 +187,15 @@ fun DashboardItem(
     icon: ImageVector,
     title: String,
     trailingIcon: ImageVector,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = { }
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .clip(MaterialTheme.shapes.medium)
             .background(MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp))
-            .clickable { }
+            .clickable(onClick = onClick)
             .padding(horizontal = 12.dp, vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween

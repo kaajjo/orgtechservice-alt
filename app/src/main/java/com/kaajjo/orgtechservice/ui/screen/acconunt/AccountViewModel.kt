@@ -1,4 +1,4 @@
-package com.kaajjo.orgtechservice.ui.screen.home
+package com.kaajjo.orgtechservice.ui.screen.acconunt
 
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -9,16 +9,15 @@ import androidx.lifecycle.viewModelScope
 import com.kaajjo.orgtechservice.core.constants.ResponseConstants
 import com.kaajjo.orgtechservice.data.local.datastore.UserDataStore
 import com.kaajjo.orgtechservice.data.remote.api.user.UserService
-import com.kaajjo.orgtechservice.data.remote.dto.UserInfoDto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class AccountViewModel @Inject constructor(
     private val userService: UserService,
     private val userDataStore: UserDataStore
 ) : ViewModel() {
@@ -26,35 +25,33 @@ class HomeViewModel @Inject constructor(
     private val _userApiKey = mutableStateOf("")
     val userApiKey by _userApiKey
 
-    var user by mutableStateOf<UserInfoDto?>(null)
-
-    var getUserDataError by mutableStateOf(false)
+    var isLoggedOut by mutableStateOf(false)
+    var logoutError by mutableStateOf(false)
 
     init {
         userDataStore.userApiKey
             .onEach {
                 _userApiKey.value = it
-                if (it.length == 32) {
-                    fetchUserData(it)
-                }
             }
             .launchIn(viewModelScope)
     }
 
-    private suspend fun fetchUserData(key: String) {
-        withContext(Dispatchers.IO) {
-            val userInfoResponse = userService.getUserInfo(key)
-            if (userInfoResponse.isSuccessful && userInfoResponse.body() != null) {
-                if (userInfoResponse.body()?.status == ResponseConstants.STATUS_OK) {
-                    withContext(Dispatchers.Main) {
-                        user = userInfoResponse.body()
-                    }
-                    getUserDataError = false
+    fun logout() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val logoutResponse = userService.logout(userApiKey)
+
+            if (logoutResponse.isSuccessful && logoutResponse.body() != null) {
+                if (logoutResponse.body()?.status == ResponseConstants.STATUS_OK) {
+                    userDataStore.setUserApiKey("") // delete user api key
+                    isLoggedOut = true
                 } else {
-                    getUserDataError = true
+                    logoutError = true
+
+                    Log.d(
+                        "AccountViewModel",
+                        "Can't logout. Response satus is: ${logoutResponse.body()?.status ?: "null"}"
+                    )
                 }
-            } else {
-                getUserDataError = true
             }
         }
     }

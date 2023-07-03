@@ -12,4 +12,9 @@ interface UserService {
     suspend fun getUserInfo(
         @Query("key") key: String
     ): Response<UserInfoDto>
+
+    @GET("api.php?call=logout")
+    suspend fun logout(
+        @Query("key") key: String
+    ): Response<UserInfoDto>
 }
