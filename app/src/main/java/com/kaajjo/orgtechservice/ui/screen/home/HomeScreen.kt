@@ -50,7 +50,7 @@ fun HomeScreen(
 ) {
     Column {
         viewModel.user?.let { user ->
-            Text(
+            /*Text(
                 text = stringResource(
                     R.string.hello_user_day,
                     user.client.name.trim().run {
@@ -62,7 +62,7 @@ fun HomeScreen(
                 ),
                 style = MaterialTheme.typography.headlineSmall,
                 modifier = Modifier.padding(horizontal = 12.dp)
-            )
+            )*/
 
             OutlinedCard(
                 modifier = Modifier
