@@ -1,5 +1,6 @@
 package com.kaajjo.orgtechservice.data.remote.api.user
 
+import com.kaajjo.orgtechservice.data.remote.dto.ActiveSessionsDto
 import com.kaajjo.orgtechservice.data.remote.dto.UserInfoDto
 import retrofit2.Response
 import retrofit2.http.GET
@@ -17,4 +18,9 @@ interface UserService {
     suspend fun logout(
         @Query("key") key: String
     ): Response<UserInfoDto>
+
+    @GET("api.php?call=keys")
+    suspend fun getActiveSessions(
+        @Query("key") key: String
+    ): Response<ActiveSessionsDto>
 }
