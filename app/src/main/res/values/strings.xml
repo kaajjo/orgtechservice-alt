@@ -7,4 +7,9 @@
     <string name="hello_user_morning">Доброе утро, %1$s!</string>
     <string name="hello_user_day">Добрый день, %1$s!</string>
     <string name="hello_user_evening">Добрый вечер, %1$s!</string>
+    <string name="label_tariff">Тариф</string>
+    <string name="label_tariffs">Тарифы</string>
+    <string name="label_my_tariff">Мой тариф</string>
+    <string name="label_current_tariff">Текущий</string>
+    <string name="label_all_tariffs">Другие тарифы</string>
 </resources>

@@ -35,11 +35,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.kaajjo.orgtechservice.R
 import com.kaajjo.orgtechservice.ui.screen.destinations.AccountScreenDestination
+import com.kaajjo.orgtechservice.ui.screen.destinations.TariffScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import korlibs.time.DateTime
@@ -86,13 +85,13 @@ fun HomeScreen(
                         title = "${
                             String.format(
                                 "%.2f",
-                                user.client.tariff.traffic / 1024f / 1024f / 1024f
+                                user.client.userTariff.traffic / 1024f / 1024f / 1024f
                             )
                         } ГиБ",
                         subtitle = "Скачано"
                     )
                     AccountInfoCardItem(
-                        title = user.client.tariff.speed.toString() + " Мбит/с",
+                        title = user.client.userTariff.speed.toString() + " Мбит/с",
                         subtitle = "Скорость"
                     )
                 }
@@ -137,17 +136,25 @@ fun HomeScreen(
         ) {
             item {
                 DashboardItem(
-                    icon = Icons.Rounded.List,
-                    title = "Мой тариф",
-                    trailingIcon = Icons.Rounded.ArrowForwardIos
+                    icon = Icons.Rounded.Person,
+                    title = "Аккаунт",
+                    trailingIcon = Icons.Rounded.ArrowForwardIos,
+                    onClick = { destinationsNavigator.navigate(AccountScreenDestination) }
                 )
             }
             item {
                 DashboardItem(
-                    icon = Icons.Rounded.Person,
-                    title = "Аккаунт",
+                    icon = Icons.Rounded.List,
+                    title = "Тариф",
                     trailingIcon = Icons.Rounded.ArrowForwardIos,
-                    onClick = { destinationsNavigator.navigate(AccountScreenDestination)}
+                    onClick = { destinationsNavigator.navigate(TariffScreenDestination) }
+                )
+            }
+            item {
+                DashboardItem(
+                    icon = Icons.Rounded.CloudDownload,
+                    title = "Расход трафика",
+                    trailingIcon = Icons.Rounded.ArrowForwardIos
                 )
             }
             item {
@@ -161,13 +168,6 @@ fun HomeScreen(
                 DashboardItem(
                     icon = Icons.Rounded.Lock,
                     title = "Блокировка",
-                    trailingIcon = Icons.Rounded.ArrowForwardIos
-                )
-            }
-            item {
-                DashboardItem(
-                    icon = Icons.Rounded.CloudDownload,
-                    title = "Расход трафика",
                     trailingIcon = Icons.Rounded.ArrowForwardIos
                 )
             }

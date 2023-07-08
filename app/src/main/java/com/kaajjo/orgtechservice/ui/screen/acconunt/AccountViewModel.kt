@@ -43,13 +43,13 @@ class AccountViewModel @Inject constructor(
             }
             .launchIn(viewModelScope)
 
-        getActiveSessions()
+        loadActiveSessions()
     }
 
-    private fun getActiveSessions() {
+    private fun loadActiveSessions() {
         val key = userApiKey
         viewModelScope.launch(Dispatchers.IO) {
-            var activeSessionsResponse = userService.getActiveSessions(key)
+            val activeSessionsResponse = userService.getActiveSessions(key)
 
             if (activeSessionsResponse.isSuccessful && activeSessionsResponse.body() != null) {
                 if (activeSessionsResponse.body()?.status == ResponseConstants.STATUS_OK) {
@@ -71,7 +71,7 @@ class AccountViewModel @Inject constructor(
                         userDataStore.setUserApiKey("")
                         isLoggedOut = true
                     } else {
-                        getActiveSessions()
+                        loadActiveSessions()
                     }
 
                 } else {

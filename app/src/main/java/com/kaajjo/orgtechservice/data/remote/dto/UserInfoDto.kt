@@ -45,7 +45,7 @@ data class Client(
     @SerializedName("sip")
     val sip: Sip,
     @SerializedName("tariff")
-    val tariff: Tariff,
+    val userTariff: UserTariff,
     @SerializedName("updated_at")
     val updatedAt: Int,
     @SerializedName("year_discount_end")
@@ -87,19 +87,19 @@ data class Sip(
     val sipPassword: String
 )
 
-data class Tariff(
+data class UserTariff(
     @SerializedName("cost")
-    val cost: String,
+    val cost: Float,
     @SerializedName("name")
     val name: String,
     @SerializedName("quota")
-    val quota: Long,
+    val quota: Long = -1,
     @SerializedName("slink_exist")
     val slinkExist: Int,
     @SerializedName("speed")
-    val speed: Int,
+    val speed: Int = -1,
     @SerializedName("traffic")
-    val traffic: Long
+    val traffic: Long = -1
 )
 
 data class DiscountPeriod(
