@@ -11,7 +11,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import androidx.navigation.compose.rememberNavController
+import com.kaajjo.orgtechservice.core.utils.GlobalExceptionHandler
 import com.kaajjo.orgtechservice.ui.screen.NavGraphs
+import com.kaajjo.orgtechservice.ui.screen.crash.CrashActivity
 import com.kaajjo.orgtechservice.ui.screen.login.LoginViewModel
 import com.kaajjo.orgtechservice.ui.theme.OrgtechserviceTheme
 import com.ramcosta.composedestinations.DestinationsNavHost
@@ -21,6 +23,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        GlobalExceptionHandler.initialize(applicationContext, CrashActivity::class.java)
+
         setContent {
             OrgtechserviceTheme {
                 // A surface container using the 'background' color from the theme
