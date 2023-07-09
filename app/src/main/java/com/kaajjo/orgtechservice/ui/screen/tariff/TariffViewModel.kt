@@ -48,7 +48,6 @@ class TariffViewModel @Inject constructor(
                 if (it.length == 32) {
                     fetchUserData(it)
                     fetchTariffsData(it)
-                    1/0
                 }
             }
             .launchIn(viewModelScope)
