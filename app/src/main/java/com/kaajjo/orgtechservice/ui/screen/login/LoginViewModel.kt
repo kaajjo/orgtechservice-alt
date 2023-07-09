@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.random.Random
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
@@ -36,6 +37,8 @@ class LoginViewModel @Inject constructor(
     var isAuthenticated by mutableStateOf(false)
     var isAuthChecked = false
 
+    var deviceName by mutableStateOf(Build.MODEL)
+
     init {
         userDataStore.userApiKey
             .onEach { _userApiKey.value = it }
@@ -47,7 +50,7 @@ class LoginViewModel @Inject constructor(
             val authResponse = authService.authUser(
                 login = login,
                 password = HashUtils.createMD5(password),
-                device = Build.MODEL,
+                device = deviceName,
                 deviceId = HashUtils.createMD5(Build.MODEL).take(16)
             )
 
