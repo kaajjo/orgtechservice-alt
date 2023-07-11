@@ -92,4 +92,7 @@ dependencies {
 
     // local data
     implementation(libs.datastore)
+
+    implementation(libs.paging.runtime)
+    implementation(libs.paging.compose)
 }

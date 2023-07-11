@@ -16,6 +16,7 @@ ksp = "1.8.10-1.0.9"
 dagger-hilt = "2.45"
 dagger-hilt-navigation = "1.0.0"
 datastore = "1.0.0"
+paging = "3.2.0-rc01"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -44,6 +45,9 @@ dagger-hilt = { group = "com.google.dagger", name = "hilt-android", version.ref 
 dagger-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "dagger-hilt"}
 dagger-hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "dagger-hilt-navigation" }
 datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
+paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
+paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

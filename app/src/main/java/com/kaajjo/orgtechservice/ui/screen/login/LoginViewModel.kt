@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.random.Random
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
@@ -60,7 +59,12 @@ class LoginViewModel @Inject constructor(
                     if (key?.status != null && key!!.status == ResponseConstants.STATUS_ERROR) {
                         authError = true
                     } else {
-                        userDataStore.setUserApiKey(key?.key?.value ?: "")
+                        userDataStore.setUserApiKey(key?.key?.value.also {
+                            Log.d(
+                                "API_KEY",
+                                it.toString()
+                            )
+                        } ?: "")
                     }
                 } else {
                     authError = true
@@ -81,7 +85,8 @@ class LoginViewModel @Inject constructor(
             val authCheckResponse = authService.checkAuth(key)
             if (authCheckResponse.isSuccessful) {
                 if (authCheckResponse.body() != null) {
-                    isAuthenticated = authCheckResponse.body()!!.status == ResponseConstants.STATUS_OK
+                    isAuthenticated =
+                        authCheckResponse.body()!!.status == ResponseConstants.STATUS_OK
                 }
                 isAuthChecked = true
             }
