@@ -15,7 +15,7 @@ P.S Надеюсь, что мне не дадут по голове за то, �
 Дашборд                        |  ✅        |  🟡        |
 Тарифы                         |  ✅        |  🟡        |
 Оплата                         |  ❌        |  ❌        |
-Расход трафика                 |  ❌        |  ❌        |
+Расход трафика                 |  🟡        |  ❌        |
 Турбо режим                    |  ❌        |  ❌        |
 Привязанные устройства         |  ✅        |  ✅        |
 Логаут                         |  ✅        |  ✅        |
@@ -26,8 +26,12 @@ P.S Надеюсь, что мне не дадут по голове за то, �
 ------------------------------ | :----:     | :----:      |
 Вход по коду/отпечатку         |  ❌        |  ❌        |
 ## Стек
+- [Material3](https://m3.material.io/) - дизайн и гайдлайны по интерфейсу
 - [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) - DI фреймворк
 - [Compose Destinations](https://github.com/raamcosta/compose-destinations) - Навигация между экранами
 - [Retrofit2](https://github.com/square/retrofit) и [OkHttp3](https://github.com/square/okhttp) - Запросы к API
 - [DataStore](https://developer.android.com/topic/libraries/architecture/datastore) - Постоянное хранилище данных
-- Прочие обычные штуки, типа Flow, Coroutines, ViewModel, Jetpack Compose ...
+- [Paging 3](https://developer.android.com/topic/libraries/architecture/paging/v3-overview) - Пагинация данных
+- [Flow](https://kotlinlang.org/docs/flow.html) - Асинхронные потоки данных и реактив
+- [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) - Асинхронность
+- Прочите штуки, типа ViewModel и тому подобное

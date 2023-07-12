@@ -16,6 +16,7 @@ import com.kaajjo.orgtechservice.ui.screen.NavGraphs
 import com.kaajjo.orgtechservice.ui.screen.crash.CrashActivity
 import com.kaajjo.orgtechservice.ui.screen.login.LoginViewModel
 import com.kaajjo.orgtechservice.ui.theme.OrgtechserviceTheme
+import com.ramcosta.composedestinations.BuildConfig
 import com.ramcosta.composedestinations.DestinationsNavHost
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,7 +25,12 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        GlobalExceptionHandler.initialize(applicationContext, CrashActivity::class.java)
+        if (!BuildConfig.DEBUG) {
+            GlobalExceptionHandler.initialize(
+                applicationContext = applicationContext,
+                activityToBeLaunched = CrashActivity::class.java
+            )
+        }
 
         setContent {
             OrgtechserviceTheme {

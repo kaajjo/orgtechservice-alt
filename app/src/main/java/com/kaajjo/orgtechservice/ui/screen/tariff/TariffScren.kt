@@ -185,7 +185,7 @@ fun TariffCard(
             }
             Spacer(Modifier.height(16.dp))
             Text(
-                text = userTariff.toString() + " ₽"
+                text = userTariff.cost.roundToInt().toString() + " ₽"
             )
         }
     }
