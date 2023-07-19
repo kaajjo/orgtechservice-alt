@@ -12,4 +12,5 @@
     <string name="label_my_tariff">Мой тариф</string>
     <string name="label_current_tariff">Текущий</string>
     <string name="label_all_tariffs">Другие тарифы</string>
+    <string name="traffic_graph_12_months">График за последние 12 месяцев</string>
 </resources>

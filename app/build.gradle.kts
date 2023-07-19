@@ -29,7 +29,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = true
-            isShrinkResources = true
+            isDebuggable = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -93,6 +93,11 @@ dependencies {
     // local data
     implementation(libs.datastore)
 
+    // paging
     implementation(libs.paging.runtime)
     implementation(libs.paging.compose)
+
+    // charts
+    implementation(libs.vico.compose)
+    implementation(libs.vico.compose.m3)
 }

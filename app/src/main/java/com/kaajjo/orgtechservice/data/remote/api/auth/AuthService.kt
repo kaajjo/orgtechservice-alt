@@ -1,7 +1,7 @@
 package com.kaajjo.orgtechservice.data.remote.api.auth
 
 import com.kaajjo.orgtechservice.data.remote.dto.AuthCheckDto
-import com.kaajjo.orgtechservice.data.remote.dto.AuthDto
+import com.kaajjo.orgtechservice.data.remote.dto.UserInfoDto
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -15,7 +15,7 @@ interface AuthService {
         @Query("password") password: String,
         @Query("device") device: String,
         @Query("device_id") deviceId: String,
-    ): Response<AuthDto>?
+    ): Response<UserInfoDto>
 
     // https://mkpnet.ru/cabinet/api.php?call=check&key=KEY
     @GET("api.php?call=check")

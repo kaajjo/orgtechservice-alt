@@ -67,13 +67,13 @@ fun LoginScreen(
     }
 
     Column {
-        Text("key: ${viewModel.key?.key?.value ?: "null"}")
+        Text("key: ${viewModel.keyResponse?.key?.value ?: "null"}")
         Text("saved_key: ${viewModel.userApiKey}")
-        Text("created: ${viewModel.key?.key?.created ?: "null"}")
-        Text("expries: ${viewModel.key?.key?.expires ?: "null"}")
-        Text("device: ${viewModel.key?.key?.device ?: "null"}")
-        Text("device_id: ${viewModel.key?.key?.device_id ?: "null"}")
-        Text("status: ${viewModel.key?.status}")
+        Text("created: ${viewModel.keyResponse?.key?.created}")
+        Text("expries: ${viewModel.keyResponse?.key?.expires}")
+        Text("device: ${viewModel.keyResponse?.key?.device}")
+        Text("device_id: ${viewModel.keyResponse?.key?.deviceId}")
+        Text("status: ${viewModel.keyResponse?.status}")
         Text("auth_error: ${viewModel.authError}")
         Text("is_authenticated: ${viewModel.isAuthenticated}")
         Text("is_auth_checked: ${viewModel.isAuthChecked}")

@@ -11,7 +11,7 @@ import com.kaajjo.orgtechservice.core.constants.ResponseConstants
 import com.kaajjo.orgtechservice.core.utils.HashUtils
 import com.kaajjo.orgtechservice.data.local.datastore.UserDataStore
 import com.kaajjo.orgtechservice.data.remote.api.auth.AuthService
-import com.kaajjo.orgtechservice.data.remote.dto.AuthDto
+import com.kaajjo.orgtechservice.data.remote.dto.UserInfoDto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
@@ -30,7 +30,7 @@ class LoginViewModel @Inject constructor(
     private val _userApiKey = mutableStateOf("")
     val userApiKey by _userApiKey
 
-    var key by mutableStateOf<AuthDto?>(null)
+    var keyResponse by mutableStateOf<UserInfoDto?>(null)
     var authError by mutableStateOf(false)
 
     var isAuthenticated by mutableStateOf(false)
@@ -45,6 +45,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun auth() {
+        isAuthChecked = false
         viewModelScope.launch(Dispatchers.IO) {
             val authResponse = authService.authUser(
                 login = login,
@@ -53,21 +54,12 @@ class LoginViewModel @Inject constructor(
                 deviceId = HashUtils.createMD5(Build.MODEL).take(16)
             )
 
-            if (authResponse != null) {
-                if (authResponse.isSuccessful) {
-                    key = authResponse.body()
-                    if (key?.status != null && key!!.status == ResponseConstants.STATUS_ERROR) {
-                        authError = true
-                    } else {
-                        userDataStore.setUserApiKey(key?.key?.value.also {
-                            Log.d(
-                                "API_KEY",
-                                it.toString()
-                            )
-                        } ?: "")
-                    }
-                } else {
+            if (authResponse.isSuccessful) {
+                keyResponse = authResponse.body()
+                if (keyResponse?.status == null || keyResponse!!.status == ResponseConstants.STATUS_ERROR) {
                     authError = true
+                } else {
+                    userDataStore.setUserApiKey(keyResponse?.key?.value ?: "")
                 }
             } else {
                 authError = true
