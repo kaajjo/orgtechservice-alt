@@ -1,5 +1,5 @@
 [versions]
-agp = "8.2.0-alpha12"
+agp = "8.2.0-alpha13"
 kotlin = "1.8.10"
 core-ktx = "1.10.1"
 junit = "4.13.2"
@@ -16,6 +16,8 @@ ksp = "1.8.10-1.0.9"
 dagger-hilt = "2.45"
 dagger-hilt-navigation = "1.0.0"
 datastore = "1.0.0"
+paging = "3.2.0-rc01"
+vico-compose = "1.6.5"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -44,6 +46,11 @@ dagger-hilt = { group = "com.google.dagger", name = "hilt-android", version.ref 
 dagger-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "dagger-hilt"}
 dagger-hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "dagger-hilt-navigation" }
 datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
+paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
+paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
+vico-compose-m3 = { group = "com.patrykandpatrick.vico", name="compose-m3", version.ref = "vico-compose" }
+vico-compose = { group = "com.patrykandpatrick.vico", name="compose", version.ref = "vico-compose" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -2,6 +2,7 @@ package com.kaajjo.orgtechservice.core.di
 
 import com.kaajjo.orgtechservice.data.remote.api.auth.AuthService
 import com.kaajjo.orgtechservice.data.remote.api.info.TariffService
+import com.kaajjo.orgtechservice.data.remote.api.info.TrafficService
 import com.kaajjo.orgtechservice.data.remote.api.user.UserService
 import dagger.Module
 import dagger.Provides
@@ -31,4 +32,10 @@ object NetworkModule {
     fun provideTariffService(
         retrofit: Retrofit
     ): TariffService = retrofit.create(TariffService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideTrafficService(
+        retrofit: Retrofit
+    ): TrafficService = retrofit.create(TrafficService::class.java)
 }

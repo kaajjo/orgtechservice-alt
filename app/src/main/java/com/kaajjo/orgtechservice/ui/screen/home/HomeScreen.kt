@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kaajjo.orgtechservice.ui.screen.destinations.AccountScreenDestination
 import com.kaajjo.orgtechservice.ui.screen.destinations.TariffScreenDestination
+import com.kaajjo.orgtechservice.ui.screen.destinations.TrafficMonthlyScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import korlibs.time.DateTime
@@ -154,7 +155,8 @@ fun HomeScreen(
                 DashboardItem(
                     icon = Icons.Rounded.CloudDownload,
                     title = "Расход трафика",
-                    trailingIcon = Icons.Rounded.ArrowForwardIos
+                    trailingIcon = Icons.Rounded.ArrowForwardIos,
+                    onClick = { destinationsNavigator.navigate(TrafficMonthlyScreenDestination) }
                 )
             }
             item {
