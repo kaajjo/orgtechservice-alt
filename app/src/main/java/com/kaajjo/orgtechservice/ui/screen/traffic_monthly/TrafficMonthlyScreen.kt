@@ -1,6 +1,7 @@
 package com.kaajjo.orgtechservice.ui.screen.traffic_monthly
 
 import android.graphics.Typeface
+import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -21,6 +22,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -33,6 +35,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import com.kaajjo.orgtechservice.R
+import com.patrykandpatrick.vico.compose.axis.axisLabelComponent
 import com.patrykandpatrick.vico.compose.axis.horizontal.bottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.startAxis
 import com.patrykandpatrick.vico.compose.chart.Chart
@@ -90,7 +93,7 @@ fun TrafficMonthlyScreen(
     )*/
 
     val marker = rememberMarker()
-
+    val chartScrollState = rememberChartScrollState()
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -119,6 +122,13 @@ fun TrafficMonthlyScreen(
                             style = MaterialTheme.typography.bodyLarge
                         )
                         Spacer(modifier = Modifier.height(12.dp))
+
+                        LaunchedEffect(Unit) {
+                            chartScrollState.animateScrollBy(
+                                value = chartScrollState.maxValue
+                            )
+                        }
+
                         ProvideChartStyle(m3ChartStyle()) {
                             Chart(
                                 chart = lineChart(
@@ -135,13 +145,15 @@ fun TrafficMonthlyScreen(
                                             )
                                         }
                                 ).getModel(),
-                                startAxis = startAxis(),
+                                startAxis = startAxis(maxLabelCount = 3),
                                 bottomAxis = bottomAxis(valueFormatter = axisValueFormatterForDate()),
                                 marker = marker,
                                 fadingEdges = rememberFadingEdges(
                                     startEdgeWidth = 0.dp,
                                     endEdgeWidth = 16.dp
-                                )
+                                ),
+                                chartScrollState = chartScrollState,
+                                isZoomEnabled = false
                             )
                         }
                     }
