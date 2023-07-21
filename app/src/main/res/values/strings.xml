@@ -13,4 +13,7 @@
     <string name="label_current_tariff">Текущий</string>
     <string name="label_all_tariffs">Другие тарифы</string>
     <string name="traffic_graph_12_months">График за последние 12 месяцев</string>
+    <string name="filter_all">Все</string>
+    <string name="tarrif_type_turbo">Turbo</string>
+    <string name="tarrif_type_unlim">Unlim</string>
 </resources>
