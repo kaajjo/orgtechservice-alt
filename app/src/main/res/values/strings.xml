@@ -17,4 +17,5 @@
     <string name="tarrif_type_turbo">Turbo</string>
     <string name="tarrif_type_unlim">Unlim</string>
     <string name="payment_history_title">История платежей</string>
+    <string name="usage_data_left">трафика осталось</string>
 </resources>
