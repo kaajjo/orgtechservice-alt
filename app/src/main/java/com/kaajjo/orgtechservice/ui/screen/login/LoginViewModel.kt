@@ -12,6 +12,7 @@ import com.kaajjo.orgtechservice.core.utils.HashUtils
 import com.kaajjo.orgtechservice.data.local.datastore.UserDataStore
 import com.kaajjo.orgtechservice.data.remote.api.auth.AuthService
 import com.kaajjo.orgtechservice.data.remote.dto.UserInfoDto
+import com.ramcosta.composedestinations.BuildConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
@@ -72,6 +73,7 @@ class LoginViewModel @Inject constructor(
         if (key.length != 32 || isAuthChecked || isAuthenticated) {
             return
         }
+
 
         viewModelScope.launch(Dispatchers.IO) {
             val authCheckResponse = authService.checkAuth(key)

@@ -22,6 +22,7 @@ import androidx.compose.material.icons.rounded.List
 import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.Videocam
+import androidx.compose.material.icons.rounded.Wallet
 import androidx.compose.material3.Divider
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
@@ -35,9 +36,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.kaajjo.orgtechservice.R
 import com.kaajjo.orgtechservice.ui.screen.destinations.AccountScreenDestination
+import com.kaajjo.orgtechservice.ui.screen.destinations.PaymentsHistoryScreenDestination
 import com.kaajjo.orgtechservice.ui.screen.destinations.TariffScreenDestination
 import com.kaajjo.orgtechservice.ui.screen.destinations.TrafficMonthlyScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
@@ -157,6 +161,14 @@ fun HomeScreen(
                     title = "Расход трафика",
                     trailingIcon = Icons.Rounded.ArrowForwardIos,
                     onClick = { destinationsNavigator.navigate(TrafficMonthlyScreenDestination) }
+                )
+            }
+            item {
+                DashboardItem(
+                    icon = Icons.Rounded.Wallet,
+                    title = stringResource(R.string.payment_history_title),
+                    trailingIcon = Icons.Rounded.ArrowForwardIos,
+                    onClick = { destinationsNavigator.navigate(PaymentsHistoryScreenDestination) }
                 )
             }
             item {
