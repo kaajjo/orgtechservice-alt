@@ -17,6 +17,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
@@ -66,96 +67,86 @@ fun LoginScreen(
         }
     }
 
-    Column {
-        Text("key: ${viewModel.keyResponse?.key?.value ?: "null"}")
-        Text("saved_key: ${viewModel.userApiKey}")
-        Text("created: ${viewModel.keyResponse?.key?.created}")
-        Text("expries: ${viewModel.keyResponse?.key?.expires}")
-        Text("device: ${viewModel.keyResponse?.key?.device}")
-        Text("device_id: ${viewModel.keyResponse?.key?.deviceId}")
-        Text("status: ${viewModel.keyResponse?.status}")
-        Text("auth_error: ${viewModel.authError}")
-        Text("is_authenticated: ${viewModel.isAuthenticated}")
-        Text("is_auth_checked: ${viewModel.isAuthChecked}")
-    }
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    Scaffold { paddingValues ->
         Column(
-            modifier = Modifier.padding(horizontal = 12.dp)
+            modifier = Modifier.fillMaxSize().padding(paddingValues),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            OutlinedTextField(
-                value = viewModel.login,
-                onValueChange = { viewModel.login = it },
-                label = {
-                    Text(
-                        stringResource(
-                            R.string.login_label
+            Column(
+                modifier = Modifier.padding(horizontal = 12.dp)
+            ) {
+                OutlinedTextField(
+                    value = viewModel.login,
+                    onValueChange = { viewModel.login = it },
+                    label = {
+                        Text(
+                            stringResource(
+                                R.string.login_label
+                            )
                         )
+                    },
+                    maxLines = 1,
+                    modifier = Modifier.autofill(
+                        autofillTypes = listOf(AutofillType.Username),
+                        onFill = { viewModel.login = it }
                     )
-                },
-                maxLines = 1,
-                modifier = Modifier.autofill(
-                    autofillTypes = listOf(AutofillType.Username),
-                    onFill = { viewModel.login = it }
                 )
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            OutlinedTextField(
-                value = viewModel.password,
-                onValueChange = { viewModel.password = it },
-                visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
-                label = {
-                    Text(
-                        stringResource(
-                            R.string.password_label
+                Spacer(modifier = Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = viewModel.password,
+                    onValueChange = { viewModel.password = it },
+                    visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
+                    label = {
+                        Text(
+                            stringResource(
+                                R.string.password_label
+                            )
                         )
+                    },
+                    trailingIcon = {
+                        IconButton(
+                            onClick = { showPassword = !showPassword }
+                        ) {
+                            Icon(
+                                imageVector = if (showPassword) Icons.Rounded.Visibility else Icons.Rounded.VisibilityOff,
+                                contentDescription = null
+                            )
+                        }
+                    },
+                    maxLines = 1,
+                    modifier = Modifier.autofill(
+                        autofillTypes = listOf(AutofillType.Password),
+                        onFill = { viewModel.password = it }
                     )
-                },
-                trailingIcon = {
-                    IconButton(
-                        onClick = { showPassword = !showPassword }
-                    ) {
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.defaultMinSize(TextFieldDefaults.MinWidth)
+                ) {
+                    IconButton(onClick = { additionalLoginParametersDialog = true }) {
                         Icon(
-                            imageVector = if (showPassword) Icons.Rounded.Visibility else Icons.Rounded.VisibilityOff,
+                            imageVector = Icons.Outlined.SettingsSuggest,
                             contentDescription = null
                         )
                     }
-                },
-                maxLines = 1,
-                modifier = Modifier.autofill(
-                    autofillTypes = listOf(AutofillType.Password),
-                    onFill = { viewModel.password = it }
-                )
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.defaultMinSize(TextFieldDefaults.MinWidth)
-            ) {
-                IconButton(onClick = { additionalLoginParametersDialog = true }) {
-                    Icon(
-                        imageVector = Icons.Outlined.SettingsSuggest,
-                        contentDescription = null
-                    )
+                    TextButton(
+                        onClick = { }
+                    ) {
+                        Text(stringResource(R.string.forgot_password))
+                    }
                 }
-                TextButton(
-                    onClick = { }
+                Spacer(modifier = Modifier.height(24.dp))
+                Button(
+                    modifier = Modifier.defaultMinSize(
+                        minWidth = TextFieldDefaults.MinWidth
+                    ),
+                    enabled = !viewModel.login.isNullOrBlank() && !viewModel.password.isNullOrBlank(),
+                    onClick = { viewModel.auth() }
                 ) {
-                    Text(stringResource(R.string.forgot_password))
+                    Text(stringResource(R.string.login))
                 }
-            }
-            Spacer(modifier = Modifier.height(24.dp))
-            Button(
-                modifier = Modifier.defaultMinSize(
-                    minWidth = TextFieldDefaults.MinWidth
-                ),
-                enabled = !viewModel.login.isNullOrBlank() && !viewModel.password.isNullOrBlank(),
-                onClick = { viewModel.auth() }
-            ) {
-                Text(stringResource(R.string.login))
             }
         }
     }
