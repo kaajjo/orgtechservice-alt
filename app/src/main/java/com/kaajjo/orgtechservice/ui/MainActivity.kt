@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModel
 import androidx.navigation.compose.rememberNavController
 import com.kaajjo.orgtechservice.core.utils.GlobalExceptionHandler
@@ -31,6 +32,8 @@ class MainActivity : ComponentActivity() {
                 activityToBeLaunched = CrashActivity::class.java
             )
         }
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             OrgtechserviceTheme {

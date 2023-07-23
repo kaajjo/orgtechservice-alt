@@ -18,6 +18,7 @@ dagger-hilt-navigation = "1.0.0"
 datastore = "1.0.0"
 paging = "3.2.0-rc01"
 vico-compose = "1.6.5"
+system-ui-controller = "0.31.5-beta"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -50,6 +51,7 @@ paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.r
 paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
 vico-compose-m3 = { group = "com.patrykandpatrick.vico", name="compose-m3", version.ref = "vico-compose" }
 vico-compose = { group = "com.patrykandpatrick.vico", name="compose", version.ref = "vico-compose" }
+accompanist-systemuicontroller = { group = "com.google.accompanist", name="accompanist-systemuicontroller", version.ref = "system-ui-controller" }
 
 
 [plugins]

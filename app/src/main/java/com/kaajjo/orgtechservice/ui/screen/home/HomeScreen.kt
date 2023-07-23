@@ -1,7 +1,5 @@
 package com.kaajjo.orgtechservice.ui.screen.home
 
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.FloatTweenSpec
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -36,21 +34,19 @@ import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.Videocam
 import androidx.compose.material.icons.rounded.Wallet
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -68,7 +64,6 @@ import com.kaajjo.orgtechservice.ui.screen.destinations.TrafficMonthlyScreenDest
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import korlibs.time.DateTime
-import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 
 @Destination
@@ -77,151 +72,141 @@ fun HomeScreen(
     destinationsNavigator: DestinationsNavigator,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    Column {
-        viewModel.user?.let { user ->
-            /*Text(
-                text = stringResource(
-                    R.string.hello_user_day,
-                    user.client.name.trim().run {
-                        this.substring(
-                            this.indexOf(' ') + 1,
-                            this.lastIndexOf(' ')
+    Scaffold { paddingValues ->
+        Column(Modifier.padding(paddingValues)) {
+            viewModel.user?.let { user ->
+                OutlinedCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 12.dp, end = 12.dp, top = 12.dp)
+                        .align(Alignment.CenterHorizontally)
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        AccountInfoCardItem(
+                            title = DateTime(user.client.account.discountPeriod.end * 1000.0).format(
+                                "d MMMM"
+                            ),
+                            subtitle = "День оплаты"
+                        )
+                        AccountInfoCardItem(
+                            title = "${
+                                String.format(
+                                    "%.2f",
+                                    user.client.userTariff.traffic / 1024f / 1024f / 1024f
+                                )
+                            } ГиБ",
+                            subtitle = "Скачано"
+                        )
+                        AccountInfoCardItem(
+                            title = user.client.userTariff.speed.toString() + " Мбит/с",
+                            subtitle = "Скорость"
                         )
                     }
-                ),
-                style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(horizontal = 12.dp)
-            )*/
-
-            OutlinedCard(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 12.dp, end = 12.dp, top = 12.dp)
-                    .align(Alignment.CenterHorizontally)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    AccountInfoCardItem(
-                        title = DateTime(user.client.account.discountPeriod.end * 1000.0).format("d MMMM"),
-                        subtitle = "День оплаты"
-                    )
-                    AccountInfoCardItem(
-                        title = "${
-                            String.format(
-                                "%.2f",
-                                user.client.userTariff.traffic / 1024f / 1024f / 1024f
-                            )
-                        } ГиБ",
-                        subtitle = "Скачано"
-                    )
-                    AccountInfoCardItem(
-                        title = user.client.userTariff.speed.toString() + " Мбит/с",
-                        subtitle = "Скорость"
-                    )
-                }
-                Spacer(modifier = Modifier.height(6.dp))
-                Divider(
-                    modifier = Modifier
-                        .fillMaxWidth(0.9f)
-                        .align(Alignment.CenterHorizontally)
-                        .clip(CircleShape)
-                )
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(12.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "Баланс",
-                        style = MaterialTheme.typography.titleLarge
+                    Spacer(modifier = Modifier.height(6.dp))
+                    Divider(
+                        modifier = Modifier
+                            .fillMaxWidth(0.9f)
+                            .align(Alignment.CenterHorizontally)
+                            .clip(CircleShape)
                     )
                     Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(12.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = user.client.account.balance + " ₽",
+                            text = "Баланс",
                             style = MaterialTheme.typography.titleLarge
                         )
-                        Spacer(Modifier.width(8.dp))
-                        FilledIconButton(onClick = { /*TODO*/ }) {
-                            Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = user.client.account.balance + " ₽",
+                                style = MaterialTheme.typography.titleLarge
+                            )
+                            Spacer(Modifier.width(8.dp))
+                            FilledIconButton(onClick = { /*TODO*/ }) {
+                                Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
+                            }
                         }
                     }
                 }
             }
-        }
 
-        Spacer(modifier = Modifier.height(16.dp))
-        LazyColumn(
-            contentPadding = PaddingValues(horizontal = 12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            item {
-                viewModel.user?.let { user ->
-                    DataUsageCard(
-                        dataUsed = user.client.userTariff.traffic.toFloat(),
-                        dataTotal = user.client.userTariff.quota.toFloat()
+            Spacer(modifier = Modifier.height(16.dp))
+            LazyColumn(
+                contentPadding = PaddingValues(horizontal = 12.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                item {
+                    viewModel.user?.let { user ->
+                        DataUsageCard(
+                            dataUsed = user.client.userTariff.traffic.toFloat(),
+                            dataTotal = user.client.userTariff.quota.toFloat()
+                        )
+                    }
+                }
+                item {
+                    DashboardItem(
+                        icon = Icons.Rounded.Person,
+                        title = "Аккаунт",
+                        trailingIcon = Icons.Rounded.ArrowForwardIos,
+                        onClick = { destinationsNavigator.navigate(AccountScreenDestination) }
                     )
                 }
-            }
-            item {
-                DashboardItem(
-                    icon = Icons.Rounded.Person,
-                    title = "Аккаунт",
-                    trailingIcon = Icons.Rounded.ArrowForwardIos,
-                    onClick = { destinationsNavigator.navigate(AccountScreenDestination) }
-                )
-            }
-            item {
-                DashboardItem(
-                    icon = Icons.Rounded.List,
-                    title = "Тариф",
-                    trailingIcon = Icons.Rounded.ArrowForwardIos,
-                    onClick = { destinationsNavigator.navigate(TariffScreenDestination) }
-                )
-            }
-            item {
-                DashboardItem(
-                    icon = Icons.Rounded.CloudDownload,
-                    title = "Расход трафика",
-                    trailingIcon = Icons.Rounded.ArrowForwardIos,
-                    onClick = { destinationsNavigator.navigate(TrafficMonthlyScreenDestination) }
-                )
-            }
-            item {
-                DashboardItem(
-                    icon = Icons.Rounded.Wallet,
-                    title = stringResource(R.string.payment_history_title),
-                    trailingIcon = Icons.Rounded.ArrowForwardIos,
-                    onClick = { destinationsNavigator.navigate(PaymentsHistoryScreenDestination) }
-                )
-            }
-            item {
-                DashboardItem(
-                    icon = Icons.Rounded.Videocam,
-                    title = "Камеры",
-                    trailingIcon = Icons.Rounded.ArrowForwardIos
-                )
-            }
-            item {
-                DashboardItem(
-                    icon = Icons.Rounded.Lock,
-                    title = "Блокировка",
-                    trailingIcon = Icons.Rounded.ArrowForwardIos
-                )
-            }
-            item {
-                DashboardItem(
-                    icon = Icons.Rounded.Bolt,
-                    title = "Турбо режим",
-                    trailingIcon = Icons.Rounded.ArrowForwardIos
-                )
+                item {
+                    DashboardItem(
+                        icon = Icons.Rounded.List,
+                        title = "Тариф",
+                        trailingIcon = Icons.Rounded.ArrowForwardIos,
+                        onClick = { destinationsNavigator.navigate(TariffScreenDestination) }
+                    )
+                }
+                item {
+                    DashboardItem(
+                        icon = Icons.Rounded.CloudDownload,
+                        title = "Расход трафика",
+                        trailingIcon = Icons.Rounded.ArrowForwardIos,
+                        onClick = { destinationsNavigator.navigate(TrafficMonthlyScreenDestination) }
+                    )
+                }
+                item {
+                    DashboardItem(
+                        icon = Icons.Rounded.Wallet,
+                        title = stringResource(R.string.payment_history_title),
+                        trailingIcon = Icons.Rounded.ArrowForwardIos,
+                        onClick = { destinationsNavigator.navigate(PaymentsHistoryScreenDestination) }
+                    )
+                }
+                item {
+                    DashboardItem(
+                        icon = Icons.Rounded.Videocam,
+                        title = "Камеры",
+                        trailingIcon = Icons.Rounded.ArrowForwardIos
+                    )
+                }
+                item {
+                    DashboardItem(
+                        icon = Icons.Rounded.Lock,
+                        title = "Блокировка",
+                        trailingIcon = Icons.Rounded.ArrowForwardIos
+                    )
+                }
+                item {
+                    DashboardItem(
+                        icon = Icons.Rounded.Bolt,
+                        title = "Турбо режим",
+                        trailingIcon = Icons.Rounded.ArrowForwardIos
+                    )
+                }
             }
         }
     }
