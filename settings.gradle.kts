@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Orgtechservice"
 include(":app")
- 
+include(":MaterialColors")

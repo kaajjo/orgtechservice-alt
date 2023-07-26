@@ -19,6 +19,8 @@ datastore = "1.0.0"
 paging = "3.2.0-rc01"
 vico-compose = "1.6.5"
 system-ui-controller = "0.31.5-beta"
+appcompat = "1.6.1"
+material = "1.9.0"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -52,6 +54,8 @@ paging-compose = { group = "androidx.paging", name = "paging-compose", version.r
 vico-compose-m3 = { group = "com.patrykandpatrick.vico", name="compose-m3", version.ref = "vico-compose" }
 vico-compose = { group = "com.patrykandpatrick.vico", name="compose", version.ref = "vico-compose" }
 accompanist-systemuicontroller = { group = "com.google.accompanist", name="accompanist-systemuicontroller", version.ref = "system-ui-controller" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 
 [plugins]
@@ -60,6 +64,7 @@ kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger-hilt" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
 
 
 [bundles]
