@@ -115,6 +115,6 @@ private fun darkFromCorePalette(color: Color): HarmonizedColorPalette {
     )
 }
 
-val colorGood = Color(0xFF4BBB0B)
+val colorGood = Color(0xFF4FA220)
 val colorNotGood = Color(0xFFE9AE18)
 val colorBad = Color(0xFFC40E0E)

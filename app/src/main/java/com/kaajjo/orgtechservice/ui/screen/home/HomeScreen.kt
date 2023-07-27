@@ -37,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -45,6 +46,7 @@ import com.kaajjo.orgtechservice.ui.screen.destinations.AccountScreenDestination
 import com.kaajjo.orgtechservice.ui.screen.destinations.PaymentsHistoryScreenDestination
 import com.kaajjo.orgtechservice.ui.screen.destinations.TariffScreenDestination
 import com.kaajjo.orgtechservice.ui.screen.destinations.TrafficMonthlyScreenDestination
+import com.kaajjo.orgtechservice.utils.formatter.DataSizeFormatter
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import korlibs.time.DateTime
@@ -55,6 +57,8 @@ fun HomeScreen(
     destinationsNavigator: DestinationsNavigator,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
+
     Scaffold { paddingValues ->
         Column(Modifier.padding(paddingValues)) {
             viewModel.user?.let { user ->
@@ -77,12 +81,7 @@ fun HomeScreen(
                             subtitle = "День оплаты"
                         )
                         AccountInfoCardItem(
-                            title = "${
-                                String.format(
-                                    "%.2f",
-                                    user.client.userTariff.traffic / 1024f / 1024f / 1024f
-                                )
-                            } ГиБ",
+                            title = DataSizeFormatter().bytesReadable(user.client.userTariff.traffic.toFloat(), context),
                             subtitle = "Скачано"
                         )
                         AccountInfoCardItem(

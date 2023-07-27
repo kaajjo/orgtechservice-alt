@@ -18,4 +18,13 @@
     <string name="tarrif_type_unlim">Unlim</string>
     <string name="payment_history_title">История платежей</string>
     <string name="usage_data_left">трафика осталось</string>
+    <string name="unit_data_short_byte">Б</string>
+    <string name="unit_data_short_kibibyte">КиБ</string>
+    <string name="unit_data_short_mebibyte">МиБ</string>
+    <string name="unit_data_short_gibibyte">ГиБ</string>
+    <string name="unit_data_short_tebibyte">ТиБ</string>
+    <string name="unit_data_short_pebibyte">ПиБ</string>
+    <string name="unit_data_short_exbibyte">ЭиБ</string>
+    <string name="unit_data_short_zebibyte">ЗиБ</string>
+    <string name="unit_data_short_yobibyte">ЙиБ</string>
 </resources>

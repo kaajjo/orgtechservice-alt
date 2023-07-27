@@ -25,8 +25,10 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kaajjo.orgtechservice.R
 import com.kaajjo.orgtechservice.ui.component.shape.WavyShape
@@ -36,7 +38,9 @@ import com.kaajjo.orgtechservice.ui.theme.colorNotGood
 import com.kaajjo.orgtechservice.ui.theme.combineColors
 import com.kaajjo.orgtechservice.ui.theme.harmonize
 import com.kaajjo.orgtechservice.ui.theme.toPalette
+import com.kaajjo.orgtechservice.utils.formatter.DataSizeFormatter
 import java.text.DecimalFormat
+import java.util.Formatter
 
 @Composable
 fun DataUsageCard(
@@ -44,6 +48,7 @@ fun DataUsageCard(
     dataTotal: Float,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
     val percent by remember(dataUsed, dataTotal) { mutableFloatStateOf(1f - dataUsed / dataTotal) }
 
     val infiniteAnimation = rememberInfiniteTransition(label = "DataUsageCard wavy infinite animation")
@@ -106,9 +111,7 @@ fun DataUsageCard(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text =
-                    DecimalFormat("0.##").format((dataTotal - dataUsed) / 1024f / 1024f / 1024f)
-                            + " ГиБ",
+                    text = DataSizeFormatter().bytesReadable(dataTotal - dataUsed, context = context),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -120,4 +123,22 @@ fun DataUsageCard(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun DataUsageCardBadPreview() {
+    DataUsageCard(dataUsed = 89f * 1024f, dataTotal = 100f * 1024f)
+}
+
+@Preview
+@Composable
+fun DataUsageCardNotGoodPreview() {
+    DataUsageCard(dataUsed = 52f * 1024f, dataTotal = 100f * 1024f)
+}
+
+@Preview
+@Composable
+fun DataUsageCardGoodPreview() {
+    DataUsageCard(dataUsed = 1f * 1024f, dataTotal = 100f * 1024f)
 }
