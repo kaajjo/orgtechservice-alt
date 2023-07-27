@@ -1,5 +1,5 @@
 # Оргтехсервис
-### NOTE: This is an alternative app for Russian internet provider - orgtechservice. Therefore, some commits and readme will be in Russian, sorry
+### NOTE: This is an alternative app for Russian internet service provider. Therefore, some things will be in Russian, sorry
 ### 🏗️ Work in progress. Most of the code is written to just work. We are not talking about any architecture or good code yet. Let's call it a prototype, I'm just testing it to see if it works 🏗️
 Стороннее <b>НЕОФИЦИАЛЬНОЕ</b> мобильное приложение для интернет-провайдера оргтехсервис.
 
