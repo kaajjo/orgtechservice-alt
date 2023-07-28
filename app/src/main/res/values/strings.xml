@@ -1,12 +1,16 @@
 <resources>
     <string name="app_name" translatable="false">Orgtechservice</string>
+
+    <string name="action_logout">Выйти</string>
+    <string name="action_apply">Применить</string>
+    <string name="action_copy">Копировать</string>
+    <string name="action_restart">Перезапустить</string>
     <string name="login_label">Логин</string>
     <string name="password_label">Пароль</string>
     <string name="login">Войти</string>
     <string name="forgot_password">Забыли пароль?</string>
-    <string name="hello_user_morning">Доброе утро, %1$s!</string>
-    <string name="hello_user_day">Добрый день, %1$s!</string>
-    <string name="hello_user_evening">Добрый вечер, %1$s!</string>
+    <string name="login_advanced">Параметры входа</string>
+    <string name="login_advanced_device_name">Название устройства</string>
     <string name="label_tariff">Тариф</string>
     <string name="label_tariffs">Тарифы</string>
     <string name="label_my_tariff">Мой тариф</string>
@@ -18,6 +22,19 @@
     <string name="tarrif_type_unlim">Unlim</string>
     <string name="payment_history_title">История платежей</string>
     <string name="usage_data_left">трафика осталось</string>
+    <string name="account_balance">Баланс</string>
+    <string name="user_account">Аккаунт</string>
+    <string name="internet_plan">Тариф</string>
+    <string name="internet_speed">Скорость</string>
+    <string name="dialog_cancel">Отмена</string>
+    <string name="something_went_wrong">Что-то пошло не так…</string>
+    <string name="data_downloaded">Скачано</string>
+    <string name="label_logout">Выход</string>
+    <string name="dialog_no">Нет</string>
+    <string name="other_devices">Привязанные устройства</string>
+    <string name="dialog_logout_text">Вы точно хотите выйти из своего аккаунта?</string>
+    <string name="data_usage">Трафик</string>
+    <string name="other_devices_this_device">Это устройство</string>
     <string name="unit_data_short_byte">Б</string>
     <string name="unit_data_short_kibibyte">КиБ</string>
     <string name="unit_data_short_mebibyte">МиБ</string>
@@ -27,4 +44,10 @@
     <string name="unit_data_short_exbibyte">ЭиБ</string>
     <string name="unit_data_short_zebibyte">ЗиБ</string>
     <string name="unit_data_short_yobibyte">ЙиБ</string>
+    <string name="payment_day">День оплаты</string>
+    <string name="label_data_usage">Расход трафика</string>
+    <string name="label_turbo_mode">Турбо режим</string>
+    <string name="other_devices_login_date">Дата входа: %1$s</string>
+    <string name="user_loyalty_discount">Накопительная скидка %1$s%</string>
+    <string name="user_self_block">Блокировка</string>
 </resources>

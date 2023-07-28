@@ -69,7 +69,9 @@ fun LoginScreen(
 
     Scaffold { paddingValues ->
         Column(
-            modifier = Modifier.fillMaxSize().padding(paddingValues),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -157,12 +159,12 @@ fun LoginScreen(
         }
         AlertDialog(
             title = {
-                Text("Параметры входа")
+                Text(stringResource(R.string.login_advanced))
             },
             onDismissRequest = { additionalLoginParametersDialog = false },
             dismissButton = {
                 TextButton(onClick = { additionalLoginParametersDialog = false }) {
-                    Text("Отмена")
+                    Text(stringResource(R.string.dialog_cancel))
                 }
             },
             confirmButton = {
@@ -172,7 +174,7 @@ fun LoginScreen(
                     },
                     enabled = !deviceNameTextError
                 ) {
-                    Text("Применить")
+                    Text(stringResource(R.string.action_apply))
                 }
             },
             icon = {
@@ -188,7 +190,7 @@ fun LoginScreen(
                         viewModel.deviceName = it
                         deviceNameTextError = it.isNullOrBlank()
                     },
-                    label = { Text("Название устройства") },
+                    label = { Text(stringResource(R.string.login_advanced_device_name)) },
                     isError = deviceNameTextError
                 )
             }

@@ -16,9 +16,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import com.kaajjo.orgtechservice.R
 import com.kaajjo.orgtechservice.data.remote.dto.TariffFull
 import com.kaajjo.orgtechservice.data.remote.dto.UserTariff
 import com.kaajjo.orgtechservice.ui.component.TextWithLeadingIcon
@@ -58,7 +60,7 @@ fun TariffCard(
             if (userLoyalty > 0) {
                 Spacer(Modifier.height(12.dp))
                 Text(
-                    text = "Накопительная скидка $userLoyalty%"
+                    text = stringResource(R.string.user_loyalty_discount, userLoyalty)
                 )
             }
             Spacer(Modifier.height(16.dp))

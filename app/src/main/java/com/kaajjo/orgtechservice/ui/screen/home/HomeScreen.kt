@@ -78,15 +78,15 @@ fun HomeScreen(
                             title = DateTime(user.client.account.discountPeriod.end * 1000.0).format(
                                 "d MMMM"
                             ),
-                            subtitle = "День оплаты"
+                            subtitle = stringResource(R.string.payment_day)
                         )
                         AccountInfoCardItem(
                             title = DataSizeFormatter().bytesReadable(user.client.userTariff.traffic.toFloat(), context),
-                            subtitle = "Скачано"
+                            subtitle = stringResource(R.string.data_downloaded)
                         )
                         AccountInfoCardItem(
                             title = user.client.userTariff.speed.toString() + " Мбит/с",
-                            subtitle = "Скорость"
+                            subtitle = stringResource(R.string.internet_speed)
                         )
                     }
                     Spacer(modifier = Modifier.height(6.dp))
@@ -104,7 +104,7 @@ fun HomeScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Баланс",
+                            text = stringResource(R.string.account_balance),
                             style = MaterialTheme.typography.titleLarge
                         )
                         Row(
@@ -139,7 +139,7 @@ fun HomeScreen(
                 item {
                     DashboardItem(
                         icon = Icons.Rounded.Person,
-                        title = "Аккаунт",
+                        title = stringResource(R.string.user_account),
                         trailingIcon = Icons.Rounded.ArrowForwardIos,
                         onClick = { destinationsNavigator.navigate(AccountScreenDestination) }
                     )
@@ -147,7 +147,7 @@ fun HomeScreen(
                 item {
                     DashboardItem(
                         icon = Icons.Rounded.List,
-                        title = "Тариф",
+                        title = stringResource(R.string.internet_plan),
                         trailingIcon = Icons.Rounded.ArrowForwardIos,
                         onClick = { destinationsNavigator.navigate(TariffScreenDestination) }
                     )
@@ -155,7 +155,7 @@ fun HomeScreen(
                 item {
                     DashboardItem(
                         icon = Icons.Rounded.CloudDownload,
-                        title = "Расход трафика",
+                        title = stringResource(R.string.label_data_usage),
                         trailingIcon = Icons.Rounded.ArrowForwardIos,
                         onClick = { destinationsNavigator.navigate(TrafficMonthlyScreenDestination) }
                     )
@@ -170,22 +170,15 @@ fun HomeScreen(
                 }
                 item {
                     DashboardItem(
-                        icon = Icons.Rounded.Videocam,
-                        title = "Камеры",
-                        trailingIcon = Icons.Rounded.ArrowForwardIos
-                    )
-                }
-                item {
-                    DashboardItem(
                         icon = Icons.Rounded.Lock,
-                        title = "Блокировка",
+                        title = stringResource(R.string.user_self_block),
                         trailingIcon = Icons.Rounded.ArrowForwardIos
                     )
                 }
                 item {
                     DashboardItem(
                         icon = Icons.Rounded.Bolt,
-                        title = "Турбо режим",
+                        title = stringResource(R.string.label_turbo_mode),
                         trailingIcon = Icons.Rounded.ArrowForwardIos
                     )
                 }

@@ -36,6 +36,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.kaajjo.orgtechservice.R
 import com.kaajjo.orgtechservice.core.utils.GlobalExceptionHandler.Companion.getExceptionString
 import com.kaajjo.orgtechservice.ui.MainActivity
 import com.kaajjo.orgtechservice.ui.theme.OrgtechserviceTheme
@@ -65,7 +66,7 @@ class CrashActivity : ComponentActivity() {
                         )
 
                         Text(
-                            text = "Что-то поломалось...",
+                            text = getString(R.string.something_went_wrong),
                             style = MaterialTheme.typography.headlineSmall
                         )
 
@@ -104,7 +105,7 @@ class CrashActivity : ComponentActivity() {
                         }) {
                             Icon(Icons.Rounded.RestartAlt, contentDescription = null)
                             Spacer(Modifier.width(8.dp))
-                            Text("Перезапустить")
+                            Text(getString(R.string.action_restart))
                         }
 
                         Spacer(Modifier.height(8.dp))
@@ -119,7 +120,7 @@ class CrashActivity : ComponentActivity() {
                         }) {
                             Icon(Icons.Rounded.ContentCopy, contentDescription = null)
                             Spacer(Modifier.width(8.dp))
-                            Text("Копировать")
+                            Text(getString(R.string.action_copy))
                         }
                     }
                 }

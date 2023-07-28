@@ -72,10 +72,6 @@ import korlibs.time.KlockLocale
 import korlibs.time.format
 import korlibs.time.locale.russian
 
-private val daysOfWeek =
-    listOf("Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек")
-private val bottomAxisValueFormatter =
-    AxisValueFormatter<AxisPosition.Horizontal.Bottom> { x, _ -> daysOfWeek[x.toInt() % daysOfWeek.size] }
 private val axisValueOverrider =
     AxisValuesOverrider.adaptiveYValues(1.1f, round = true)
 
@@ -97,7 +93,7 @@ fun TrafficMonthlyScreen(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("Трафик") },
+                title = { Text(stringResource(R.string.data_usage)) },
                 navigationIcon = {
                     IconButton(onClick = { destinationsNavigator.popBackStack() }) {
                         Icon(

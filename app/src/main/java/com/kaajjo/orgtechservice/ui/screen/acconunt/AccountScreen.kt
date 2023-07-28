@@ -41,8 +41,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.kaajjo.orgtechservice.R
 import com.kaajjo.orgtechservice.data.remote.dto.Session
 import com.kaajjo.orgtechservice.ui.component.collapsing_topappbar.CollapsingTitle
 import com.kaajjo.orgtechservice.ui.component.collapsing_topappbar.CollapsingTopAppBar
@@ -64,7 +66,7 @@ fun AccountScreen(
             .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CollapsingTopAppBar(
-                collapsingTitle = CollapsingTitle.medium(titleText = "Аккаунт"),
+                collapsingTitle = CollapsingTitle.medium(titleText = stringResource(R.string.user_account)),
                 navigationIcon = {
                     IconButton(onClick = { destinationsNavigator.popBackStack() }) {
                         Icon(
@@ -109,7 +111,7 @@ fun AccountScreen(
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(
-                                text = "Привязанные устройства",
+                                text = stringResource(R.string.other_devices),
                                 style = MaterialTheme.typography.titleLarge
                             )
                         }
@@ -142,24 +144,24 @@ fun AccountScreen(
                 ) {
                     Icon(imageVector = Icons.Rounded.Logout, contentDescription = null)
                     Spacer(modifier = Modifier.width(12.dp))
-                    Text("Выход")
+                    Text(stringResource(R.string.label_logout))
                 }
             }
         }
         if (confirmLogoutDialog) {
             AlertDialog(
                 title = {
-                    Text("Выход")
+                    Text(stringResource(R.string.label_logout))
                 },
                 onDismissRequest = { confirmLogoutDialog = false },
                 dismissButton = {
                     TextButton(onClick = { confirmLogoutDialog = false }) {
-                        Text("Нет")
+                        Text(stringResource(R.string.dialog_no))
                     }
                 },
                 confirmButton = {
                     TextButton(onClick = { viewModel.logout(viewModel.userApiKey) }) {
-                        Text("Выйти")
+                        Text(stringResource(R.string.action_logout))
                     }
                 },
                 icon = {
@@ -169,7 +171,7 @@ fun AccountScreen(
                     )
                 },
                 text = {
-                    Text("Вы точно хотите выйти из своего аккаунта?")
+                    Text(stringResource(R.string.dialog_logout_text))
                 }
             )
         }
@@ -205,14 +207,17 @@ fun ActiveSessionItem(
             )
             Spacer(modifier = Modifier.height(6.dp))
             Text(
-                text = "Дата входа: ${DateTime(session.created * 1000.0).format("dd.MM.yyyy")}",
+                text = stringResource(
+                    R.string.other_devices_login_date,
+                    DateTime(session.created * 1000.0).format("dd.MM.yyyy")
+                ),
                 style = MaterialTheme.typography.bodyMedium,
                 color = LocalContentColor.current.copy(alpha = 0.7f)
             )
         }
         if (session.value == currentKey) {
             Text(
-                text = "Это устройство",
+                text = stringResource(R.string.other_devices_this_device),
                 style = MaterialTheme.typography.bodySmall
             )
         } else {
