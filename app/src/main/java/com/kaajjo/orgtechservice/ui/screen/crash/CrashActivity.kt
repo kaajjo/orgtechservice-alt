@@ -84,6 +84,7 @@ class CrashActivity : ComponentActivity() {
                             ) {
                                 Text(
                                     text = crashReason,
+                                    style = MaterialTheme.typography.labelSmall,
                                     textAlign = TextAlign.Center,
                                     modifier = Modifier.padding(12.dp)
                                 )
