@@ -6,14 +6,17 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.SettingsSuggest
+import androidx.compose.material.icons.rounded.Password
 import androidx.compose.material.icons.rounded.Visibility
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -195,5 +198,34 @@ fun LoginScreen(
                 )
             }
         )
+    } else {
+        if (viewModel.isAuthenticating) {
+            AlertDialog(
+                title = { Text("Выполняем вход...") },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Rounded.Password,
+                        contentDescription = null
+                    )
+                },
+                onDismissRequest = { },
+                dismissButton = {
+                    TextButton(onClick = { viewModel.cancelCheckAuth() }) {
+                        Text(stringResource(R.string.dialog_cancel))
+                    }
+                },
+                confirmButton = {
+
+                },
+                text = {
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+            )
+        }
     }
 }

@@ -15,10 +15,13 @@ import com.kaajjo.orgtechservice.data.remote.dto.UserInfoDto
 import com.ramcosta.composedestinations.BuildConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.cancellation.CancellationException
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
@@ -39,32 +42,46 @@ class LoginViewModel @Inject constructor(
 
     var deviceName by mutableStateOf(Build.MODEL)
 
+    private var checkAuthJob: Job? = null
+
+    var isAuthenticating by mutableStateOf(false)
+
     init {
         userDataStore.userApiKey
             .onEach { _userApiKey.value = it }
+            .launchIn(viewModelScope)
+
+        userDataStore.lastUsedLogin
+            .onEach { login = it }
             .launchIn(viewModelScope)
     }
 
     fun auth() {
         isAuthChecked = false
-        viewModelScope.launch(Dispatchers.IO) {
-            val authResponse = authService.authUser(
-                login = login,
-                password = HashUtils.createMD5(password),
-                device = deviceName,
-                deviceId = HashUtils.createMD5(Build.MODEL).take(16)
-            )
+        try {
+            viewModelScope.launch(Dispatchers.IO) {
+                val authResponse = authService.authUser(
+                    login = login,
+                    password = HashUtils.createMD5(password),
+                    device = deviceName,
+                    deviceId = HashUtils.createMD5(Build.MODEL).take(16)
+                )
 
-            if (authResponse.isSuccessful) {
-                keyResponse = authResponse.body()
-                if (keyResponse?.status == null || keyResponse!!.status == ResponseConstants.STATUS_ERROR) {
-                    authError = true
+                if (authResponse.isSuccessful) {
+                    keyResponse = authResponse.body()
+                    if (keyResponse?.status == null || keyResponse!!.status == ResponseConstants.STATUS_ERROR) {
+                        authError = true
+                    } else {
+                        userDataStore.setUserApiKey(keyResponse?.key?.value ?: "")
+                        userDataStore.setLastUsedLogin(login)
+                    }
                 } else {
-                    userDataStore.setUserApiKey(keyResponse?.key?.value ?: "")
+                    authError = true
                 }
-            } else {
-                authError = true
             }
+        } catch (e: Exception) {
+            Log.e("auth", e.message.toString())
+            authError = true
         }
     }
 
@@ -74,8 +91,9 @@ class LoginViewModel @Inject constructor(
             return
         }
 
+        isAuthenticating = true
 
-        viewModelScope.launch(Dispatchers.IO) {
+        checkAuthJob = viewModelScope.launch(Dispatchers.IO) {
             val authCheckResponse = authService.checkAuth(key)
             if (authCheckResponse.isSuccessful) {
                 if (authCheckResponse.body() != null) {
@@ -83,6 +101,16 @@ class LoginViewModel @Inject constructor(
                         authCheckResponse.body()!!.status == ResponseConstants.STATUS_OK
                 }
                 isAuthChecked = true
+                isAuthenticating = false
+            }
+        }
+    }
+
+    fun cancelCheckAuth() {
+        checkAuthJob?.let {
+            if (it.isActive) {
+                it.cancel()
+                isAuthenticating = false
             }
         }
     }

@@ -15,11 +15,16 @@ private val Context.createDataStore: DataStore<Preferences> by preferencesDataSt
 class UserDataStore @Inject constructor(@ApplicationContext context: Context) {
     private val dataStore = context.createDataStore
 
-    private val userApiKeyKey = stringPreferencesKey("user_api_key")
+    private val userApiKeyPref = stringPreferencesKey("user_api_key")
+    private val lastUsedLoginPref = stringPreferencesKey("last_used_login")
 
     suspend fun setUserApiKey(key: String) {
-        dataStore.edit { it[userApiKeyKey] = key }
+        dataStore.edit { it[userApiKeyPref] = key }
     }
+    val userApiKey = dataStore.data.map { it[userApiKeyPref] ?: "" }
 
-    val userApiKey = dataStore.data.map { it[userApiKeyKey] ?: "" }
+    suspend fun setLastUsedLogin(value: String) {
+        dataStore.edit { it[lastUsedLoginPref] = value }
+    }
+    val lastUsedLogin = dataStore.data.map { it[lastUsedLoginPref] ?: "" }
 }
