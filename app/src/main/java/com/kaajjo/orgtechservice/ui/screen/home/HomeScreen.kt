@@ -25,6 +25,7 @@ import androidx.compose.material.icons.rounded.Videocam
 import androidx.compose.material.icons.rounded.Wallet
 import androidx.compose.material3.Divider
 import androidx.compose.material3.FilledIconButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
@@ -90,7 +91,7 @@ fun HomeScreen(
                         )
                     }
                     Spacer(modifier = Modifier.height(6.dp))
-                    Divider(
+                    HorizontalDivider(
                         modifier = Modifier
                             .fillMaxWidth(0.9f)
                             .align(Alignment.CenterHorizontally)

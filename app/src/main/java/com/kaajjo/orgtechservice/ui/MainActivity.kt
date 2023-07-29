@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModel
@@ -20,6 +21,8 @@ import com.kaajjo.orgtechservice.ui.theme.OrgtechserviceTheme
 import com.ramcosta.composedestinations.BuildConfig
 import com.ramcosta.composedestinations.DestinationsNavHost
 import dagger.hilt.android.AndroidEntryPoint
+
+val LocalUserApiKey = compositionLocalOf<String> { "" }
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -45,7 +48,6 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
 
                     Column {
-                        val viewModel by viewModels<LoginViewModel>()
                         DestinationsNavHost(
                             navGraph = NavGraphs.root,
                             navController = navController,
@@ -56,8 +58,4 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
-
-class MainViewModel : ViewModel() {
-
 }
