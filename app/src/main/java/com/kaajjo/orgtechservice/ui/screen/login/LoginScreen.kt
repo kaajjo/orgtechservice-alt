@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.SettingsSuggest
+import androidx.compose.material.icons.rounded.Login
 import androidx.compose.material.icons.rounded.Password
 import androidx.compose.material.icons.rounded.Visibility
 import androidx.compose.material.icons.rounded.VisibilityOff
@@ -204,16 +205,12 @@ fun LoginScreen(
                 title = { Text("Выполняем вход...") },
                 icon = {
                     Icon(
-                        imageVector = Icons.Rounded.Password,
+                        imageVector = Icons.Rounded.Login,
                         contentDescription = null
                     )
                 },
                 onDismissRequest = { },
-                dismissButton = {
-                    TextButton(onClick = { viewModel.cancelCheckAuth() }) {
-                        Text(stringResource(R.string.dialog_cancel))
-                    }
-                },
+                dismissButton = { },
                 confirmButton = {
 
                 },

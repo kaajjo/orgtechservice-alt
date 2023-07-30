@@ -12,16 +12,12 @@ import com.kaajjo.orgtechservice.core.utils.HashUtils
 import com.kaajjo.orgtechservice.data.local.datastore.UserDataStore
 import com.kaajjo.orgtechservice.data.remote.api.auth.AuthService
 import com.kaajjo.orgtechservice.data.remote.dto.UserInfoDto
-import com.ramcosta.composedestinations.BuildConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.coroutines.cancellation.CancellationException
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
@@ -40,9 +36,7 @@ class LoginViewModel @Inject constructor(
     var isAuthenticated by mutableStateOf(false)
     var isAuthChecked = false
 
-    var deviceName by mutableStateOf(Build.MODEL)
-
-    private var checkAuthJob: Job? = null
+    var deviceName: String by mutableStateOf(Build.MODEL)
 
     var isAuthenticating by mutableStateOf(false)
 
@@ -59,6 +53,8 @@ class LoginViewModel @Inject constructor(
     fun auth() {
         isAuthChecked = false
         try {
+            isAuthenticating = true
+
             viewModelScope.launch(Dispatchers.IO) {
                 val authResponse = authService.authUser(
                     login = login,
@@ -74,6 +70,7 @@ class LoginViewModel @Inject constructor(
                     } else {
                         userDataStore.setUserApiKey(keyResponse?.key?.value ?: "")
                         userDataStore.setLastUsedLogin(login)
+                        isAuthenticating = false
                     }
                 } else {
                     authError = true
@@ -93,7 +90,7 @@ class LoginViewModel @Inject constructor(
 
         isAuthenticating = true
 
-        checkAuthJob = viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
             val authCheckResponse = authService.checkAuth(key)
             if (authCheckResponse.isSuccessful) {
                 if (authCheckResponse.body() != null) {
@@ -101,15 +98,6 @@ class LoginViewModel @Inject constructor(
                         authCheckResponse.body()!!.status == ResponseConstants.STATUS_OK
                 }
                 isAuthChecked = true
-                isAuthenticating = false
-            }
-        }
-    }
-
-    fun cancelCheckAuth() {
-        checkAuthJob?.let {
-            if (it.isActive) {
-                it.cancel()
                 isAuthenticating = false
             }
         }
