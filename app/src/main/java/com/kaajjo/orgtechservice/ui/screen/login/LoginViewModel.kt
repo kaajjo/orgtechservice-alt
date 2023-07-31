@@ -70,11 +70,11 @@ class LoginViewModel @Inject constructor(
                     } else {
                         userDataStore.setUserApiKey(keyResponse?.key?.value ?: "")
                         userDataStore.setLastUsedLogin(login)
-                        isAuthenticating = false
                     }
                 } else {
                     authError = true
                 }
+                isAuthenticating = false
             }
         } catch (e: Exception) {
             Log.e("auth", e.message.toString())

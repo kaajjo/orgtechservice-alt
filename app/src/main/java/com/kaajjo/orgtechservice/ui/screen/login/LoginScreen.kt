@@ -9,10 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.SettingsSuggest
 import androidx.compose.material.icons.rounded.Login
-import androidx.compose.material.icons.rounded.Password
 import androidx.compose.material.icons.rounded.Visibility
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.AlertDialog
@@ -37,6 +37,8 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.AutofillType
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -96,9 +98,15 @@ fun LoginScreen(
                     modifier = Modifier.autofill(
                         autofillTypes = listOf(AutofillType.Username),
                         onFill = { viewModel.login = it }
+                    ),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Next
                     )
                 )
+
                 Spacer(modifier = Modifier.height(8.dp))
+
                 OutlinedTextField(
                     value = viewModel.password,
                     onValueChange = { viewModel.password = it },
@@ -124,9 +132,15 @@ fun LoginScreen(
                     modifier = Modifier.autofill(
                         autofillTypes = listOf(AutofillType.Password),
                         onFill = { viewModel.password = it }
+                    ),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Done
                     )
                 )
+
                 Spacer(modifier = Modifier.height(12.dp))
+
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.defaultMinSize(TextFieldDefaults.MinWidth)
@@ -143,7 +157,9 @@ fun LoginScreen(
                         Text(stringResource(R.string.forgot_password))
                     }
                 }
+
                 Spacer(modifier = Modifier.height(24.dp))
+
                 Button(
                     modifier = Modifier.defaultMinSize(
                         minWidth = TextFieldDefaults.MinWidth
