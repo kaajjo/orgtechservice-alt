@@ -41,11 +41,15 @@ class TariffViewModel @Inject constructor(
     private var _userLoyalty = MutableStateFlow<Int>(0)
     var userLoyalty = _userLoyalty.asStateFlow()
 
+    private var _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
+
     init {
         userDataStore.userApiKey
             .onEach {
                 _userApiKey.value = it
                 if (it.length == 32) {
+                    _isLoading.value = true
                     fetchUserData(it)
                     fetchTariffsData(it)
                 }
@@ -77,5 +81,6 @@ class TariffViewModel @Inject constructor(
                 }
             }
         }
+        _isLoading.value = false
     }
 }

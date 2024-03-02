@@ -2,8 +2,10 @@ package com.kaajjo.orgtechservice.ui.screen.tariff
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -12,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
@@ -26,6 +29,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
@@ -50,6 +54,7 @@ fun TariffScreen(
     val scrollBehavior = rememberTopAppBarScrollBehavior()
     val tariffs by viewModel.tariffs.collectAsState()
     val userLoyalty by viewModel.userLoyalty.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
 
     Scaffold(
         modifier = Modifier
@@ -72,7 +77,8 @@ fun TariffScreen(
 
         val types by remember(tariffs) {
             mutableStateOf(
-                mapOf("" to context.getString(R.string.filter_all)) + tariffs.map { it.tsTariffType }.distinct().associateWith {
+                mapOf("" to context.getString(R.string.filter_all)) + tariffs.map { it.tsTariffType }
+                    .distinct().associateWith {
                     when (it) {
                         "turbo" -> context.getString(R.string.tarrif_type_turbo)
                         "unlim" -> context.getString(R.string.tarrif_type_unlim)
@@ -85,62 +91,75 @@ fun TariffScreen(
             mutableStateOf(types.asSequence().first().key)
         }
 
-        LazyColumn(
-            modifier = Modifier.padding(paddingValues)
-        ) {
-            item {
-                viewModel.user?.client?.userTariff?.let {
-                    Text(
-                        text = stringResource(R.string.label_current_tariff),
-                        style = MaterialTheme.typography.titleLarge,
-                        modifier = Modifier.padding(start = 12.dp)
-                    )
-                    TariffCard(
-                        modifier = Modifier.padding(start = 12.dp, end = 12.dp, top = 12.dp),
-                        userLoyalty = userLoyalty,
-                        userTariff = it
-                    )
-                }
+        if (isLoading) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text("Загружаем тарифы...")
+                Spacer(Modifier.height(24.dp))
+                CircularProgressIndicator()
             }
-            item {
-                Spacer(Modifier.height(16.dp))
-                Text(
-                    text = stringResource(R.string.label_all_tariffs),
-                    style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.padding(start = 12.dp)
-                )
-            }
-            item {
-                Spacer(Modifier.height(12.dp))
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    contentPadding = PaddingValues(start = 12.dp)
-                ) {
-                    items(types.toList()) {
-                        FilterChip(
-                            selected = selectedType == it.first,
-                            onClick = { selectedType = it.first },
-                            label = { Text(it.second) }
+        } else {
+            LazyColumn(
+                modifier = Modifier.padding(paddingValues)
+            ) {
+                item {
+                    viewModel.user?.client?.userTariff?.let {
+                        Text(
+                            text = stringResource(R.string.label_current_tariff),
+                            style = MaterialTheme.typography.titleLarge,
+                            modifier = Modifier.padding(start = 12.dp)
+                        )
+                        TariffCard(
+                            modifier = Modifier.padding(start = 12.dp, end = 12.dp, top = 12.dp),
+                            userLoyalty = userLoyalty,
+                            userTariff = it
                         )
                     }
                 }
-            }
-            items(
-                if (types.size > 1 && selectedType.isNotEmpty()) {
-                    tariffs.filter { it.tsTariffType == selectedType }
-                } else {
-                    tariffs
+                item {
+                    Spacer(Modifier.height(16.dp))
+                    Text(
+                        text = stringResource(R.string.label_all_tariffs),
+                        style = MaterialTheme.typography.titleLarge,
+                        modifier = Modifier.padding(start = 12.dp)
+                    )
                 }
-            ) {
-                Spacer(Modifier.height(12.dp))
-                TariffCard(
-                    tariff = it,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 12.dp)
-                        .animateItemPlacement(),
-                    userLoyalty = userLoyalty
-                )
+                item {
+                    Spacer(Modifier.height(12.dp))
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        contentPadding = PaddingValues(start = 12.dp)
+                    ) {
+                        items(types.toList()) {
+                            FilterChip(
+                                selected = selectedType == it.first,
+                                onClick = { selectedType = it.first },
+                                label = { Text(it.second) }
+                            )
+                        }
+                    }
+                }
+                items(
+                    if (types.size > 1 && selectedType.isNotEmpty()) {
+                        tariffs.filter { it.tsTariffType == selectedType }
+                    } else {
+                        tariffs
+                    }
+                ) {
+                    Spacer(Modifier.height(12.dp))
+                    TariffCard(
+                        tariff = it,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 12.dp)
+                            .animateItemPlacement(),
+                        userLoyalty = userLoyalty
+                    )
+                }
             }
         }
     }

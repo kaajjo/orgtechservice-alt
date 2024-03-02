@@ -16,6 +16,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -24,6 +25,7 @@ import com.kaajjo.orgtechservice.R
 import com.kaajjo.orgtechservice.data.remote.dto.TariffFull
 import com.kaajjo.orgtechservice.data.remote.dto.UserTariff
 import com.kaajjo.orgtechservice.ui.component.TextWithLeadingIcon
+import com.kaajjo.orgtechservice.utils.formatter.DataSizeFormatter
 import java.text.DecimalFormat
 import kotlin.math.roundToInt
 
@@ -33,6 +35,7 @@ fun TariffCard(
     modifier: Modifier = Modifier,
     userLoyalty: Int = 0
 ) {
+    val context = LocalContext.current
     Card(
         modifier = modifier
     ) {
@@ -52,9 +55,7 @@ fun TariffCard(
             )
             Spacer(Modifier.height(12.dp))
             TextWithLeadingIcon(
-                text = (userTariff.quota / 1024f / 1024f / 1024f)
-                    .roundToInt()
-                    .toString() + " ГиБ ",
+                text = DataSizeFormatter().bytesReadable(userTariff.quota.toFloat(), context),
                 icon = Icons.Rounded.DataUsage
             )
             if (userLoyalty > 0) {
@@ -96,7 +97,7 @@ fun TariffCard(
             )
             Spacer(Modifier.height(12.dp))
             TextWithLeadingIcon(
-                text ="${tariff.quota.ifEmpty { "∞" }} ГиБ",
+                text = "${tariff.quota.ifEmpty { "∞" }} ГиБ",
                 icon = Icons.Rounded.DataUsage
             )
             if (tariff.freeIptv == "1") {

@@ -48,6 +48,6 @@
     <string name="label_data_usage">Расход трафика</string>
     <string name="label_turbo_mode">Турбо режим</string>
     <string name="other_devices_login_date">Дата входа: %1$s</string>
-    <string name="user_loyalty_discount">Накопительная скидка %1$d</string>
+    <string name="user_loyalty_discount">Накопительная скидка %1$d%%</string>
     <string name="user_self_block">Блокировка</string>
 </resources>
