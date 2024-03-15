@@ -29,7 +29,7 @@
     <string name="dialog_cancel">Отмена</string>
     <string name="something_went_wrong">Что-то пошло не так…</string>
     <string name="data_downloaded">Скачано</string>
-    <string name="label_logout">Выход</string>
+    <string name="logout">Выход</string>
     <string name="dialog_no">Нет</string>
     <string name="other_devices">Привязанные устройства</string>
     <string name="dialog_logout_text">Вы точно хотите выйти из своего аккаунта?</string>

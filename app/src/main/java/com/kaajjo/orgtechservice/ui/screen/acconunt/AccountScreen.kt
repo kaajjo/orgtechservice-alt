@@ -15,11 +15,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.Logout
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.Logout
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -140,18 +142,22 @@ fun AccountScreen(
             item {
                 FilledTonalButton(
                     modifier = Modifier.fillMaxWidth(),
-                    onClick = { confirmLogoutDialog = true }
+                    onClick = { confirmLogoutDialog = true },
+                    colors = ButtonDefaults.filledTonalButtonColors(
+                        containerColor = MaterialTheme.colorScheme.error,
+                        contentColor = MaterialTheme.colorScheme.onError
+                    )
                 ) {
-                    Icon(imageVector = Icons.Rounded.Logout, contentDescription = null)
+                    Icon(imageVector = Icons.AutoMirrored.Rounded.Logout, contentDescription = null)
                     Spacer(modifier = Modifier.width(12.dp))
-                    Text(stringResource(R.string.label_logout))
+                    Text(stringResource(R.string.logout))
                 }
             }
         }
         if (confirmLogoutDialog) {
             AlertDialog(
                 title = {
-                    Text(stringResource(R.string.label_logout))
+                    Text(stringResource(R.string.logout))
                 },
                 onDismissRequest = { confirmLogoutDialog = false },
                 dismissButton = {
