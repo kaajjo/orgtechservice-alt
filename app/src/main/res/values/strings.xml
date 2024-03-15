@@ -50,4 +50,5 @@
     <string name="other_devices_login_date">Дата входа: %1$s</string>
     <string name="user_loyalty_discount">Накопительная скидка %1$d%%</string>
     <string name="user_self_block">Блокировка</string>
+    <string name="add_fund_label">Пополнить на</string>
 </resources>

@@ -94,4 +94,7 @@ dependencies {
     implementation(libs.vico.compose.m3)
 
     implementation(libs.accompanist.systemuicontroller)
+
+    implementation(libs.coil)
+    implementation(libs.coil.svg)
 }

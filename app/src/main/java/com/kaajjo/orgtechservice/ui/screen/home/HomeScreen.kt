@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kaajjo.orgtechservice.R
 import com.kaajjo.orgtechservice.ui.screen.destinations.AccountScreenDestination
+import com.kaajjo.orgtechservice.ui.screen.destinations.AddFundsScreenDestination
 import com.kaajjo.orgtechservice.ui.screen.destinations.PaymentsHistoryScreenDestination
 import com.kaajjo.orgtechservice.ui.screen.destinations.TariffScreenDestination
 import com.kaajjo.orgtechservice.ui.screen.destinations.TrafficMonthlyScreenDestination
@@ -116,7 +117,9 @@ fun HomeScreen(
                                 style = MaterialTheme.typography.titleLarge
                             )
                             Spacer(Modifier.width(8.dp))
-                            FilledIconButton(onClick = { /*TODO*/ }) {
+                            FilledIconButton(onClick = { destinationsNavigator.navigate(
+                                AddFundsScreenDestination
+                            ) }) {
                                 Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
                             }
                         }

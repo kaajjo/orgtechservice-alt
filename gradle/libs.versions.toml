@@ -7,9 +7,9 @@ androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
 lifecycle-runtime-ktx = "2.6.1"
 activity-compose = "1.7.2"
-compose = "1.5.0-rc01"
+compose = "1.6.3"
 retrofit2 = "2.9.0"
-logging-interceptor = "3.5.0"
+logging-interceptor = "4.12.0"
 klock = "4.0.2"
 compose-destinations = "1.9.42-beta"
 ksp = "1.8.20-1.0.11"
@@ -21,7 +21,8 @@ vico-compose = "1.6.5"
 system-ui-controller = "0.31.5-beta"
 appcompat = "1.6.1"
 material = "1.9.0"
-material3 = "1.2.0-alpha04"
+material3 = "1.2.1"
+coil = "2.6.0"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -57,7 +58,8 @@ vico-compose = { group = "com.patrykandpatrick.vico", name="compose", version.re
 accompanist-systemuicontroller = { group = "com.google.accompanist", name="accompanist-systemuicontroller", version.ref = "system-ui-controller" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-
+coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+coil-svg = { group = "io.coil-kt", name = "coil-svg", version.ref = "coil" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
