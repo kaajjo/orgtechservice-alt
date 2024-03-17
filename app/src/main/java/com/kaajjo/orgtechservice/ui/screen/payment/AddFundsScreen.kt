@@ -53,6 +53,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kaajjo.orgtechservice.R
 import com.kaajjo.orgtechservice.ui.component.collapsing_topappbar.CollapsingTitle
@@ -196,25 +197,27 @@ fun AddFundsScreen(
                 )
             }*/
 
-            Spacer(modifier = Modifier.height(8.dp))
-            ItemRowBigIcon(
-                title = stringResource(id = R.string.payment_history_title),
-                icon = Icons.Rounded.History,
-                subtitle = if (lastPayment != null) {
-                    "${lastPayment!!.sum.roundToInt()}₽, ${
-                        DateTime(lastPayment!!.timestamp * 1000.0).format(
-                            "d MMMM HH:mm",
-                            KlockLocale.russian
-                        )
-                    }"
-                } else {
-                    null
-                },
-                onClick = { destinationsNavigator.navigate(PaymentsHistoryScreenDestination) }
-            )
+            Column(modifier = Modifier.padding(horizontal = 12.dp)) {
+                Spacer(modifier = Modifier.height(8.dp))
+                ItemRowBigIcon(
+                    title = stringResource(id = R.string.payment_history_title),
+                    icon = Icons.Rounded.History,
+                    subtitle = if (lastPayment != null) {
+                        "${lastPayment!!.sum.roundToInt()}₽, ${
+                            DateTime(lastPayment!!.timestamp * 1000.0).format(
+                                "d MMMM HH:mm",
+                                KlockLocale.russian
+                            )
+                        }"
+                    } else {
+                        null
+                    },
+                    onClick = { destinationsNavigator.navigate(PaymentsHistoryScreenDestination) }
+                )
 
-            Spacer(modifier = Modifier.height(8.dp))
-            ItemRowBigIcon(title = "Обещанный платеж", icon = Icons.Rounded.CreditCard)
+                Spacer(modifier = Modifier.height(8.dp))
+                ItemRowBigIcon(title = "Обещанный платеж", icon = Icons.Rounded.CreditCard)
+            }
         }
     }
 }
@@ -226,56 +229,65 @@ fun ItemRowBigIcon(
     title: String,
     icon: ImageVector,
     modifier: Modifier = Modifier,
+    trailing: @Composable () -> Unit = { },
     onClick: () -> Unit = { },
     subtitle: String? = null,
     shape: Shape = MaterialTheme.shapes.large,
     onLongClick: ((() -> Unit))? = null,
     titleStyle: TextStyle = MaterialTheme.typography.titleMedium,
-    subtitleStyle: TextStyle = MaterialTheme.typography.titleSmall,
+    subtitleStyle: TextStyle = MaterialTheme.typography.titleSmall.copy(fontSize = 12.sp),
     containerColor: Color = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp),
     iconBackground: Color = MaterialTheme.colorScheme.secondaryContainer,
     iconSize: Dp = 42.dp
 ) {
     Row(
         modifier = modifier
-            .padding(horizontal = 12.dp)
             .fillMaxWidth()
             .clip(shape)
             .background(containerColor)
             .combinedClickable(onClick = onClick, onLongClick = onLongClick)
     ) {
         Row(
-            modifier = Modifier.padding(12.dp),
-            verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier
+                .padding(12.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Box(
-                modifier = Modifier.background(
-                    color = iconBackground,
-                    shape = MaterialTheme.shapes.medium
-                )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.weight(1f)
             ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(iconSize)
-                        .padding(6.dp)
-                )
-            }
-            Spacer(modifier = Modifier.width(8.dp))
-            Column {
-                Text(
-                    text = title,
-                    style = titleStyle
-                )
-                if (subtitle != null) {
-                    Text(
-                        text = subtitle,
-                        style = subtitleStyle,
-                        color = LocalContentColor.current.copy(alpha = 0.8f)
+                Box(
+                    modifier = Modifier.background(
+                        color = iconBackground,
+                        shape = MaterialTheme.shapes.medium
+                    )
+                ) {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(iconSize)
+                            .padding(6.dp)
                     )
                 }
+                Spacer(modifier = Modifier.width(8.dp))
+                Column {
+                    Text(
+                        text = title,
+                        style = titleStyle
+                    )
+                    if (subtitle != null) {
+                        Text(
+                            text = subtitle,
+                            style = subtitleStyle,
+                            color = LocalContentColor.current.copy(alpha = 0.8f)
+                        )
+                    }
+                }
             }
+            trailing()
         }
     }
 }

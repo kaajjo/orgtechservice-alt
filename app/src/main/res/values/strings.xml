@@ -51,4 +51,5 @@
     <string name="user_loyalty_discount">Накопительная скидка %1$d%%</string>
     <string name="user_self_block">Блокировка</string>
     <string name="add_fund_label">Пополнить на</string>
+    <string name="change_password">Изменить пароль</string>
 </resources>

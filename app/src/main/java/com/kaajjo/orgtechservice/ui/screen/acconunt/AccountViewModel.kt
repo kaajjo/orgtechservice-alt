@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.kaajjo.orgtechservice.core.constants.ResponseConstants
 import com.kaajjo.orgtechservice.data.local.datastore.UserDataStore
 import com.kaajjo.orgtechservice.data.remote.api.user.UserService
+import com.kaajjo.orgtechservice.data.remote.dto.Client
 import com.kaajjo.orgtechservice.data.remote.dto.Session
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +26,8 @@ class AccountViewModel @Inject constructor(
     private val userService: UserService,
     private val userDataStore: UserDataStore
 ) : ViewModel() {
+    private val _userInfo = MutableStateFlow<Client?>(null)
+    val userInfo = _userInfo.asStateFlow()
 
     private val _userApiKey = mutableStateOf("")
     val userApiKey by _userApiKey
@@ -44,8 +47,29 @@ class AccountViewModel @Inject constructor(
             .launchIn(viewModelScope)
 
         loadActiveSessions()
+        loadUserInfo(_userApiKey.value)
     }
 
+    private fun loadUserInfo(key: String) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                try {
+                    val userInfoResponse = userService.getUserInfo(key)
+                    if (userInfoResponse.isSuccessful && userInfoResponse.body() != null && userInfoResponse.body()?.status == ResponseConstants.STATUS_OK) {
+                        withContext(Dispatchers.Main) {
+                            _userInfo.value = userInfoResponse.body()?.client
+                        }
+                    } else {
+                        withContext(Dispatchers.Main) {
+                            _userInfo.value = null
+                        }
+                    }
+                } catch (e: Exception) {
+                    Log.e("Account LoadUserData", e.message.toString())
+                }
+            }
+        }
+    }
     private fun loadActiveSessions() {
         val key = userApiKey
         viewModelScope.launch(Dispatchers.IO) {

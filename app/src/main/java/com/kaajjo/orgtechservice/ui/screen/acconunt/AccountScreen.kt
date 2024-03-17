@@ -15,11 +15,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowForwardIos
 import androidx.compose.material.icons.automirrored.rounded.Logout
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
+import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material.icons.rounded.Logout
+import androidx.compose.material.icons.rounded.Password
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledTonalButton
@@ -52,6 +55,7 @@ import com.kaajjo.orgtechservice.ui.component.collapsing_topappbar.CollapsingTit
 import com.kaajjo.orgtechservice.ui.component.collapsing_topappbar.CollapsingTopAppBar
 import com.kaajjo.orgtechservice.ui.component.collapsing_topappbar.rememberTopAppBarScrollBehavior
 import com.kaajjo.orgtechservice.ui.screen.destinations.LoginScreenDestination
+import com.kaajjo.orgtechservice.ui.screen.payment.ItemRowBigIcon
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import korlibs.time.DateTime
@@ -63,6 +67,8 @@ fun AccountScreen(
     viewModel: AccountViewModel = hiltViewModel()
 ) {
     val scrollBehavior = rememberTopAppBarScrollBehavior()
+    val user by viewModel.userInfo.collectAsState()
+
     Scaffold(
         modifier = Modifier
             .nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -92,8 +98,14 @@ fun AccountScreen(
                 .padding(paddingValues)
                 .padding(top = 12.dp),
             contentPadding = PaddingValues(horizontal = 12.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
+            item {
+                user?.let {
+                    Text(it.name)
+                    Text(it.phone)
+                }
+            }
             item {
                 var isExpanded by rememberSaveable {
                     mutableStateOf(false)
@@ -138,6 +150,25 @@ fun AccountScreen(
                         }
                     }
                 }
+            }
+            item {
+                ItemRowBigIcon(
+                    title = stringResource(R.string.change_password),
+                    subtitle = "Изменить пароль для входа в аккаунт",
+                    icon = Icons.Rounded.Password,
+                    onClick = { /*TODO*/ },
+                    trailing = {
+                        Icon(Icons.AutoMirrored.Rounded.ArrowForwardIos, null)
+                    }
+                )
+            }
+            item {
+                ItemRowBigIcon(
+                    title = "Блокировка",
+                    subtitle = "Добровольная временная блокировка услуг",
+                    icon = Icons.Rounded.Lock,
+                    onClick = { /*TODO*/ }
+                )
             }
             item {
                 FilledTonalButton(
