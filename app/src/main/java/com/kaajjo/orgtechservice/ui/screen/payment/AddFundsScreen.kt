@@ -1,10 +1,12 @@
 package com.kaajjo.orgtechservice.ui.screen.payment
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -13,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -40,10 +43,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kaajjo.orgtechservice.R
@@ -70,6 +78,7 @@ fun AddFundsScreen(
     val lastPayment by viewModel.lastPayment.collectAsState()
     val recommendedSum by viewModel.recommendedSum.collectAsState()
     var sum by rememberSaveable { mutableStateOf("10") }
+    val userInfo by viewModel.userInfo.collectAsState()
 
     Scaffold(
         modifier = Modifier
@@ -179,60 +188,93 @@ fun AddFundsScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
-            Row(
-                modifier = Modifier
-                    .clickable { destinationsNavigator.navigate(PaymentsHistoryScreenDestination) }
-                    .padding(horizontal = 12.dp)
-                    .fillMaxWidth()
-                    .clip(MaterialTheme.shapes.large)
-                    .background(MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp))
-                    .padding(12.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column {
-                    Row {
-                        Icon(
-                            Icons.Rounded.History,
-                            contentDescription = null
-                        )
-                        Spacer(modifier = Modifier.width(12.dp))
-                        Text(
-                            text = stringResource(R.string.payment_history_title),
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                    }
-                    lastPayment?.let { item ->
-                        Text(
-                            text = "Последний платеж - ${item.sum.roundToInt()}₽, ${
-                                DateTime(item.timestamp * 1000.0).format(
-                                    "HH:mm d MMMM yyyy",
-                                    KlockLocale.russian
-                                )
-                            }",
-                            style = MaterialTheme.typography.labelSmall,
-                            modifier = Modifier.padding(top = 2.dp)
-                        )
-                    }
-                }
-            }
+            /*userInfo?.let {
+                Spacer(modifier = Modifier.height(8.dp))
+                ItemRowBigIcon(
+                    title = "Текущий баланс ${it.account.balance}₽",
+                    icon = Icons.Rounded.AccountBalanceWallet
+                )
+            }*/
 
-            Spacer(modifier = Modifier.height(12.dp))
-            Row(
-                modifier = Modifier
-                    .padding(horizontal = 12.dp)
-                    .fillMaxWidth()
-                    .clip(MaterialTheme.shapes.large)
-                    .background(MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp))
-                    .padding(12.dp),
-                verticalAlignment = Alignment.CenterVertically
+            Spacer(modifier = Modifier.height(8.dp))
+            ItemRowBigIcon(
+                title = stringResource(id = R.string.payment_history_title),
+                icon = Icons.Rounded.History,
+                subtitle = if (lastPayment != null) {
+                    "${lastPayment!!.sum.roundToInt()}₽, ${
+                        DateTime(lastPayment!!.timestamp * 1000.0).format(
+                            "d MMMM HH:mm",
+                            KlockLocale.russian
+                        )
+                    }"
+                } else {
+                    null
+                },
+                onClick = { destinationsNavigator.navigate(PaymentsHistoryScreenDestination) }
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+            ItemRowBigIcon(title = "Обещанный платеж", icon = Icons.Rounded.CreditCard)
+        }
+    }
+}
+
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun ItemRowBigIcon(
+    title: String,
+    icon: ImageVector,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = { },
+    subtitle: String? = null,
+    shape: Shape = MaterialTheme.shapes.large,
+    onLongClick: ((() -> Unit))? = null,
+    titleStyle: TextStyle = MaterialTheme.typography.titleMedium,
+    subtitleStyle: TextStyle = MaterialTheme.typography.titleSmall,
+    containerColor: Color = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp),
+    iconBackground: Color = MaterialTheme.colorScheme.secondaryContainer,
+    iconSize: Dp = 42.dp
+) {
+    Row(
+        modifier = modifier
+            .padding(horizontal = 12.dp)
+            .fillMaxWidth()
+            .clip(shape)
+            .background(containerColor)
+            .combinedClickable(onClick = onClick, onLongClick = onLongClick)
+    ) {
+        Row(
+            modifier = Modifier.padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(
+                modifier = Modifier.background(
+                    color = iconBackground,
+                    shape = MaterialTheme.shapes.medium
+                )
             ) {
                 Icon(
-                    Icons.Rounded.CreditCard,
-                    contentDescription = null
+                    imageVector = icon,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(iconSize)
+                        .padding(6.dp)
                 )
-                Spacer(modifier = Modifier.width(12.dp))
-                Text("Обещанный платеж")
+            }
+            Spacer(modifier = Modifier.width(8.dp))
+            Column {
+                Text(
+                    text = title,
+                    style = titleStyle
+                )
+                if (subtitle != null) {
+                    Text(
+                        text = subtitle,
+                        style = subtitleStyle,
+                        color = LocalContentColor.current.copy(alpha = 0.8f)
+                    )
+                }
             }
         }
     }

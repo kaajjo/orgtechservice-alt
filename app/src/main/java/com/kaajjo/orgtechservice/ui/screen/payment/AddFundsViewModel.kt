@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.kaajjo.orgtechservice.data.local.datastore.UserDataStore
 import com.kaajjo.orgtechservice.data.remote.api.payment.PaymentService
 import com.kaajjo.orgtechservice.data.remote.api.user.UserService
+import com.kaajjo.orgtechservice.data.remote.dto.Client
 import com.kaajjo.orgtechservice.data.remote.dto.PaymentHistoryItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +17,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 import kotlin.math.ceil
-import kotlin.math.roundToInt
 
 @HiltViewModel
 class AddFundsViewModel @Inject constructor(
@@ -32,6 +32,9 @@ class AddFundsViewModel @Inject constructor(
 
     private var _recommendedSum = MutableStateFlow(0)
     var recommendedSum = _recommendedSum.asStateFlow()
+
+    private var _userInfo = MutableStateFlow<Client?>(null)
+    var userInfo = _userInfo.asStateFlow()
 
     init {
         userDataStore.userApiKey
@@ -59,6 +62,8 @@ class AddFundsViewModel @Inject constructor(
     private suspend fun calculateRecommendedSum(key: String) {
         try {
             val userInfoResponse = userService.getUserInfo(key)
+            _userInfo.value = userInfoResponse.body()?.client
+
             if (userInfoResponse.isSuccessful && userInfoResponse.body() != null) {
                 userInfoResponse.body()?.let { userInfo ->
                     val currentBalance = userInfo.client.account.balance.toFloat()

@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,16 +13,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.List
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.ArrowForwardIos
 import androidx.compose.material.icons.rounded.Bolt
-import androidx.compose.material.icons.rounded.CloudDownload
-import androidx.compose.material.icons.rounded.List
+import androidx.compose.material.icons.rounded.Language
 import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material.icons.rounded.Person
-import androidx.compose.material.icons.rounded.Videocam
 import androidx.compose.material.icons.rounded.Wallet
-import androidx.compose.material3.Divider
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -48,6 +44,7 @@ import com.kaajjo.orgtechservice.ui.screen.destinations.AddFundsScreenDestinatio
 import com.kaajjo.orgtechservice.ui.screen.destinations.PaymentsHistoryScreenDestination
 import com.kaajjo.orgtechservice.ui.screen.destinations.TariffScreenDestination
 import com.kaajjo.orgtechservice.ui.screen.destinations.TrafficMonthlyScreenDestination
+import com.kaajjo.orgtechservice.ui.screen.payment.ItemRowBigIcon
 import com.kaajjo.orgtechservice.utils.formatter.DataSizeFormatter
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -83,7 +80,10 @@ fun HomeScreen(
                             subtitle = stringResource(R.string.payment_day)
                         )
                         AccountInfoCardItem(
-                            title = DataSizeFormatter().bytesReadable(user.client.userTariff.traffic.toFloat(), context),
+                            title = DataSizeFormatter().bytesReadable(
+                                user.client.userTariff.traffic.toFloat(),
+                                context
+                            ),
                             subtitle = stringResource(R.string.data_downloaded)
                         )
                         AccountInfoCardItem(
@@ -117,9 +117,11 @@ fun HomeScreen(
                                 style = MaterialTheme.typography.titleLarge
                             )
                             Spacer(Modifier.width(8.dp))
-                            FilledIconButton(onClick = { destinationsNavigator.navigate(
-                                AddFundsScreenDestination
-                            ) }) {
+                            FilledIconButton(onClick = {
+                                destinationsNavigator.navigate(
+                                    AddFundsScreenDestination
+                                )
+                            }) {
                                 Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
                             }
                         }
@@ -129,61 +131,61 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
             LazyColumn(
-                contentPadding = PaddingValues(horizontal = 12.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 item {
                     viewModel.user?.let { user ->
                         DataUsageCard(
                             dataUsed = user.client.userTariff.traffic.toFloat(),
-                            dataTotal = user.client.userTariff.quota.toFloat()
+                            dataTotal = user.client.userTariff.quota.toFloat(),
+                            modifier = Modifier.padding(horizontal = 12.dp)
                         )
                     }
                 }
                 item {
-                    DashboardItem(
-                        icon = Icons.Rounded.Person,
+                    ItemRowBigIcon(
                         title = stringResource(R.string.user_account),
-                        trailingIcon = Icons.Rounded.ArrowForwardIos,
-                        onClick = { destinationsNavigator.navigate(AccountScreenDestination) }
+                        icon = Icons.Rounded.Person,
+                        onClick = { destinationsNavigator.navigate(AccountScreenDestination) },
+                        titleStyle = MaterialTheme.typography.titleLarge
                     )
                 }
                 item {
-                    DashboardItem(
-                        icon = Icons.Rounded.List,
+                    ItemRowBigIcon(
                         title = stringResource(R.string.internet_plan),
-                        trailingIcon = Icons.Rounded.ArrowForwardIos,
-                        onClick = { destinationsNavigator.navigate(TariffScreenDestination) }
+                        icon = Icons.AutoMirrored.Rounded.List,
+                        onClick = { destinationsNavigator.navigate(TariffScreenDestination) },
+                        titleStyle = MaterialTheme.typography.titleLarge
                     )
                 }
                 item {
-                    DashboardItem(
-                        icon = Icons.Rounded.CloudDownload,
+                    ItemRowBigIcon(
                         title = stringResource(R.string.label_data_usage),
-                        trailingIcon = Icons.Rounded.ArrowForwardIos,
-                        onClick = { destinationsNavigator.navigate(TrafficMonthlyScreenDestination) }
+                        icon = Icons.Rounded.Language,
+                        onClick = { destinationsNavigator.navigate(TrafficMonthlyScreenDestination) },
+                        titleStyle = MaterialTheme.typography.titleLarge
                     )
                 }
                 item {
-                    DashboardItem(
-                        icon = Icons.Rounded.Wallet,
+                    ItemRowBigIcon(
                         title = stringResource(R.string.payment_history_title),
-                        trailingIcon = Icons.Rounded.ArrowForwardIos,
-                        onClick = { destinationsNavigator.navigate(PaymentsHistoryScreenDestination) }
+                        icon = Icons.Rounded.Wallet,
+                        onClick = { destinationsNavigator.navigate(PaymentsHistoryScreenDestination) },
+                        titleStyle = MaterialTheme.typography.titleLarge
                     )
                 }
                 item {
-                    DashboardItem(
-                        icon = Icons.Rounded.Lock,
+                    ItemRowBigIcon(
                         title = stringResource(R.string.user_self_block),
-                        trailingIcon = Icons.Rounded.ArrowForwardIos
+                        icon = Icons.Rounded.Lock,
+                        titleStyle = MaterialTheme.typography.titleLarge
                     )
                 }
                 item {
-                    DashboardItem(
-                        icon = Icons.Rounded.Bolt,
+                    ItemRowBigIcon(
                         title = stringResource(R.string.label_turbo_mode),
-                        trailingIcon = Icons.Rounded.ArrowForwardIos
+                        icon = Icons.Rounded.Bolt,
+                        titleStyle = MaterialTheme.typography.titleLarge
                     )
                 }
             }
