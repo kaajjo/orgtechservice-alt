@@ -139,8 +139,7 @@ fun HomeScreen(
                     viewModel.user?.let { user ->
                         DataUsageCard(
                             dataUsed = user.client.userTariff.traffic.toFloat(),
-                            dataTotal = user.client.userTariff.quota.toFloat(),
-                            modifier = Modifier.padding(horizontal = 12.dp)
+                            dataTotal = user.client.userTariff.quota.toFloat()
                         )
                     }
                 }
