@@ -1,12 +1,8 @@
 package com.kaajjo.orgtechservice.ui.screen.payment
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -15,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -40,22 +35,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kaajjo.orgtechservice.R
+import com.kaajjo.orgtechservice.ui.component.ItemRowBigIcon
 import com.kaajjo.orgtechservice.ui.component.collapsing_topappbar.CollapsingTitle
 import com.kaajjo.orgtechservice.ui.component.collapsing_topappbar.CollapsingTopAppBar
 import com.kaajjo.orgtechservice.ui.component.collapsing_topappbar.rememberTopAppBarScrollBehavior
@@ -216,78 +205,12 @@ fun AddFundsScreen(
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
-                ItemRowBigIcon(title = "Обещанный платеж", icon = Icons.Rounded.CreditCard)
+                ItemRowBigIcon(
+                    title = "Обещанный платеж",
+                    subtitle = "Пополнить баланс за счет оператора сроком на 3 дня",
+                    icon = Icons.Rounded.CreditCard
+                )
             }
-        }
-    }
-}
-
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun ItemRowBigIcon(
-    title: String,
-    icon: ImageVector,
-    modifier: Modifier = Modifier,
-    trailing: @Composable () -> Unit = { },
-    onClick: () -> Unit = { },
-    subtitle: String? = null,
-    shape: Shape = MaterialTheme.shapes.large,
-    onLongClick: ((() -> Unit))? = null,
-    titleStyle: TextStyle = MaterialTheme.typography.titleMedium,
-    subtitleStyle: TextStyle = MaterialTheme.typography.titleSmall.copy(fontSize = 12.sp),
-    containerColor: Color = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp),
-    iconBackground: Color = MaterialTheme.colorScheme.secondaryContainer,
-    iconSize: Dp = 42.dp
-) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(shape)
-            .background(containerColor)
-            .combinedClickable(onClick = onClick, onLongClick = onLongClick)
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(12.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.weight(1f)
-            ) {
-                Box(
-                    modifier = Modifier.background(
-                        color = iconBackground,
-                        shape = MaterialTheme.shapes.medium
-                    )
-                ) {
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(iconSize)
-                            .padding(6.dp)
-                    )
-                }
-                Spacer(modifier = Modifier.width(8.dp))
-                Column {
-                    Text(
-                        text = title,
-                        style = titleStyle
-                    )
-                    if (subtitle != null) {
-                        Text(
-                            text = subtitle,
-                            style = subtitleStyle,
-                            color = LocalContentColor.current.copy(alpha = 0.8f)
-                        )
-                    }
-                }
-            }
-            trailing()
         }
     }
 }

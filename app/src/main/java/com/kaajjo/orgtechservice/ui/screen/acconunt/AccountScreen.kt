@@ -51,11 +51,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kaajjo.orgtechservice.R
 import com.kaajjo.orgtechservice.data.remote.dto.Session
+import com.kaajjo.orgtechservice.ui.component.ItemRowBigIcon
 import com.kaajjo.orgtechservice.ui.component.collapsing_topappbar.CollapsingTitle
 import com.kaajjo.orgtechservice.ui.component.collapsing_topappbar.CollapsingTopAppBar
 import com.kaajjo.orgtechservice.ui.component.collapsing_topappbar.rememberTopAppBarScrollBehavior
 import com.kaajjo.orgtechservice.ui.screen.destinations.LoginScreenDestination
-import com.kaajjo.orgtechservice.ui.screen.payment.ItemRowBigIcon
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import korlibs.time.DateTime

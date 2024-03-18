@@ -40,12 +40,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kaajjo.orgtechservice.R
+import com.kaajjo.orgtechservice.ui.component.ItemRowBigIcon
 import com.kaajjo.orgtechservice.ui.screen.destinations.AccountScreenDestination
 import com.kaajjo.orgtechservice.ui.screen.destinations.AddFundsScreenDestination
 import com.kaajjo.orgtechservice.ui.screen.destinations.PaymentsHistoryScreenDestination
 import com.kaajjo.orgtechservice.ui.screen.destinations.TariffScreenDestination
 import com.kaajjo.orgtechservice.ui.screen.destinations.TrafficMonthlyScreenDestination
-import com.kaajjo.orgtechservice.ui.screen.payment.ItemRowBigIcon
 import com.kaajjo.orgtechservice.utils.formatter.DataSizeFormatter
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
