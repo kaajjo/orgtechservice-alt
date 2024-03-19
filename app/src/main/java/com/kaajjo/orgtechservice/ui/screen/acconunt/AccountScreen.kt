@@ -190,8 +190,8 @@ fun AccountScreen(
             }
             item {
                 ItemRowBigIcon(
-                    title = "Блокировка",
-                    subtitle = "Добровольная временная блокировка услуг",
+                    title = stringResource(R.string.user_self_block),
+                    subtitle = stringResource(R.string.user_self_block_description),
                     icon = Icons.Rounded.Lock,
                     onClick = { /*TODO*/ }
                 )

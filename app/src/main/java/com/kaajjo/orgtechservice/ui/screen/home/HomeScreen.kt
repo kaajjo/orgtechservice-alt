@@ -18,7 +18,6 @@ import androidx.compose.material.icons.automirrored.rounded.List
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Bolt
 import androidx.compose.material.icons.rounded.Language
-import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.Wallet
 import androidx.compose.material3.FilledIconButton
@@ -172,13 +171,6 @@ fun HomeScreen(
                         title = stringResource(R.string.payment_history_title),
                         icon = Icons.Rounded.Wallet,
                         onClick = { destinationsNavigator.navigate(PaymentsHistoryScreenDestination) },
-                        titleStyle = MaterialTheme.typography.titleLarge
-                    )
-                }
-                item {
-                    ItemRowBigIcon(
-                        title = stringResource(R.string.user_self_block),
-                        icon = Icons.Rounded.Lock,
                         titleStyle = MaterialTheme.typography.titleLarge
                     )
                 }

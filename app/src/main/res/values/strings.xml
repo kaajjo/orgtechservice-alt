@@ -52,4 +52,5 @@
     <string name="user_self_block">Блокировка</string>
     <string name="add_fund_label">Пополнить на</string>
     <string name="change_password">Изменить пароль</string>
+    <string name="user_self_block_description">Добровольная временная блокировка услуг</string>
 </resources>
