@@ -5,6 +5,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -12,16 +13,17 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.ArrowForwardIos
 import androidx.compose.material.icons.automirrored.rounded.Logout
-import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.Lock
-import androidx.compose.material.icons.rounded.Logout
 import androidx.compose.material.icons.rounded.Password
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
@@ -47,7 +49,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kaajjo.orgtechservice.R
 import com.kaajjo.orgtechservice.data.remote.dto.Session
@@ -78,7 +82,7 @@ fun AccountScreen(
                 navigationIcon = {
                     IconButton(onClick = { destinationsNavigator.popBackStack() }) {
                         Icon(
-                            imageVector = Icons.Rounded.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
                             contentDescription = null
                         )
                     }
@@ -102,8 +106,30 @@ fun AccountScreen(
         ) {
             item {
                 user?.let {
-                    Text(it.name)
-                    Text(it.phone)
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .clip(MaterialTheme.shapes.small)
+                            .padding(4.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(48.dp)
+                                .clip(CircleShape)
+                                .background(color = MaterialTheme.colorScheme.primaryContainer)
+                        ) {
+                            Text(
+                                text = it.name.first().toString(),
+                                fontSize = 20.sp,
+                                modifier = Modifier.align(Alignment.Center)
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Column {
+                            Text(it.name, fontSize = 18.sp, fontWeight = FontWeight(500))
+                            Text(it.phone, style = MaterialTheme.typography.labelMedium)
+                        }
+                    }
                 }
             }
             item {
@@ -126,7 +152,7 @@ fun AccountScreen(
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(
                                 text = stringResource(R.string.other_devices),
-                                style = MaterialTheme.typography.titleLarge
+                                style = MaterialTheme.typography.titleMedium
                             )
                         }
                         val iconRotation by animateFloatAsState(if (!isExpanded) 0f else 180f)
@@ -136,9 +162,9 @@ fun AccountScreen(
                             modifier = Modifier.rotate(iconRotation)
                         )
                     }
-                    Spacer(modifier = Modifier.height(12.dp))
                     AnimatedVisibility(visible = isExpanded) {
                         Column {
+                            Spacer(modifier = Modifier.height(12.dp))
                             activeSessions.forEach {
                                 ActiveSessionItem(
                                     session = it,
@@ -203,7 +229,7 @@ fun AccountScreen(
                 },
                 icon = {
                     Icon(
-                        imageVector = Icons.Rounded.Logout,
+                        imageVector = Icons.AutoMirrored.Rounded.Logout,
                         contentDescription = null
                     )
                 },
