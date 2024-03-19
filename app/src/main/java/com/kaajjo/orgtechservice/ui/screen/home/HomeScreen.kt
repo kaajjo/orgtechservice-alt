@@ -18,8 +18,10 @@ import androidx.compose.material.icons.automirrored.rounded.List
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Bolt
 import androidx.compose.material.icons.rounded.Language
+import androidx.compose.material.icons.rounded.NewReleases
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.Wallet
+import androidx.compose.material3.Button
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -37,6 +39,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kaajjo.orgtechservice.R
 import com.kaajjo.orgtechservice.ui.component.ItemRowBigIcon
@@ -140,6 +143,33 @@ fun HomeScreen(
                             dataUsed = user.client.userTariff.traffic.toFloat(),
                             dataTotal = user.client.userTariff.quota.toFloat()
                         )
+                    }
+                }
+                item {
+                    Row(
+                        modifier = Modifier
+                            .clip(MaterialTheme.shapes.large)
+                            .background(MaterialTheme.colorScheme.surfaceBright)
+                    ) {
+                        Column(modifier = Modifier.padding(12.dp)) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(
+                                    imageVector = Icons.Rounded.NewReleases,
+                                    null,
+                                    tint = MaterialTheme.colorScheme.error
+                                )
+                                Spacer(Modifier.width(8.dp))
+                                Text(
+                                    text = "У вас закончился трафик",
+                                    style = MaterialTheme.typography.titleMedium.copy(fontSize = 18.sp)
+                                )
+                            }
+                            Spacer(Modifier.height(4.dp))
+                            Text("Активируйте турбо режим и получите 100ГБ трафика за 50₽")
+                            Button(onClick = { }, modifier = Modifier.align(Alignment.End)) {
+                                Text("Активировать")
+                            }
+                        }
                     }
                 }
                 item {
