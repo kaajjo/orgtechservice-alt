@@ -21,6 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.ArrowForwardIos
 import androidx.compose.material.icons.automirrored.rounded.Logout
+import androidx.compose.material.icons.rounded.AppBlocking
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.Lock
@@ -72,6 +73,12 @@ fun AccountScreen(
 ) {
     val scrollBehavior = rememberTopAppBarScrollBehavior()
     val user by viewModel.userInfo.collectAsState()
+    var kickLinkedDeviceDialog by rememberSaveable {
+        mutableStateOf(false)
+    }
+    var linkedDeviceToKick by rememberSaveable {
+        mutableStateOf("")
+    }
 
     Scaffold(
         modifier = Modifier
@@ -169,7 +176,10 @@ fun AccountScreen(
                                 ActiveSessionItem(
                                     session = it,
                                     currentKey = viewModel.userApiKey,
-                                    onLogoutClick = { viewModel.logout(it.value) }
+                                    onLogoutClick = {
+                                        kickLinkedDeviceDialog = true
+                                        linkedDeviceToKick = it.value
+                                    }
                                 )
                                 Spacer(Modifier.height(8.dp))
                             }
@@ -235,6 +245,34 @@ fun AccountScreen(
                 },
                 text = {
                     Text(stringResource(R.string.dialog_logout_text))
+                }
+            )
+        } else if (kickLinkedDeviceDialog) {
+            AlertDialog(
+                title = {
+                        Text(stringResource(R.string.dialog_kick_linked_device_title))
+                },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Rounded.AppBlocking,
+                        contentDescription = null
+                    )
+                },
+                onDismissRequest = { kickLinkedDeviceDialog = false },
+                dismissButton = {
+                    TextButton(onClick = { kickLinkedDeviceDialog = false }) {
+                        Text(stringResource(R.string.dialog_no))
+                    }
+                },
+                confirmButton = {
+                    TextButton(onClick = {
+                        if (linkedDeviceToKick.isNotEmpty()) {
+                            viewModel.logout(linkedDeviceToKick)
+                        }
+                        kickLinkedDeviceDialog = false
+                    }) {
+                        Text(stringResource(R.string.dialog_yes))
+                    }
                 }
             )
         }

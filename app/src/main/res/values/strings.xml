@@ -31,6 +31,7 @@
     <string name="data_downloaded">Скачано</string>
     <string name="logout">Выход</string>
     <string name="dialog_no">Нет</string>
+    <string name="dialog_yes">Да</string>
     <string name="other_devices">Привязанные устройства</string>
     <string name="dialog_logout_text">Вы точно хотите выйти из своего аккаунта?</string>
     <string name="data_usage">Трафик</string>
@@ -53,4 +54,5 @@
     <string name="add_fund_label">Пополнить на</string>
     <string name="change_password">Изменить пароль</string>
     <string name="user_self_block_description">Добровольная временная блокировка услуг</string>
+    <string name="dialog_kick_linked_device_title">Удалить устройтсво?</string>
 </resources>
