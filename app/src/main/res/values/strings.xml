@@ -55,4 +55,7 @@
     <string name="change_password">Изменить пароль</string>
     <string name="user_self_block_description">Добровольная временная блокировка услуг</string>
     <string name="dialog_kick_linked_device_title">Удалить устройтсво?</string>
+    <string name="exceed_data">У вас закончился трафик</string>
+    <string name="activate_turbo_hint">Активируйте турбо режим и получите %1$dГБ трафика за %2$d₽</string>
+    <string name="action_activate">Активировать</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.kaajjo.orgtechservice.ui.screen.home
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,8 +21,10 @@ import androidx.compose.material.icons.rounded.Bolt
 import androidx.compose.material.icons.rounded.Language
 import androidx.compose.material.icons.rounded.NewReleases
 import androidx.compose.material.icons.rounded.Person
+import androidx.compose.material.icons.rounded.RocketLaunch
 import androidx.compose.material.icons.rounded.Wallet
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -32,6 +35,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,6 +49,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kaajjo.orgtechservice.R
+import com.kaajjo.orgtechservice.data.MagicConstants
 import com.kaajjo.orgtechservice.ui.component.ItemRowBigIcon
 import com.kaajjo.orgtechservice.ui.screen.destinations.AccountScreenDestination
 import com.kaajjo.orgtechservice.ui.screen.destinations.AddFundsScreenDestination
@@ -60,6 +68,9 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
+    var testDataCapCard by rememberSaveable {
+        mutableStateOf(false)
+    }
 
     Scaffold { paddingValues ->
         Column(Modifier.padding(paddingValues)) {
@@ -141,35 +152,18 @@ fun HomeScreen(
                     viewModel.user?.let { user ->
                         DataUsageCard(
                             dataUsed = user.client.userTariff.traffic.toFloat(),
-                            dataTotal = user.client.userTariff.quota.toFloat()
+                            dataTotal = user.client.userTariff.quota.toFloat(),
+                            onClick = { testDataCapCard = !testDataCapCard }
                         )
                     }
                 }
                 item {
-                    Row(
-                        modifier = Modifier
-                            .clip(MaterialTheme.shapes.large)
-                            .background(MaterialTheme.colorScheme.surfaceBright)
-                    ) {
-                        Column(modifier = Modifier.padding(12.dp)) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(
-                                    imageVector = Icons.Rounded.NewReleases,
-                                    null,
-                                    tint = MaterialTheme.colorScheme.error
-                                )
-                                Spacer(Modifier.width(8.dp))
-                                Text(
-                                    text = "У вас закончился трафик",
-                                    style = MaterialTheme.typography.titleMedium.copy(fontSize = 18.sp)
-                                )
-                            }
-                            Spacer(Modifier.height(4.dp))
-                            Text("Активируйте турбо режим и получите 100ГБ трафика за 50₽")
-                            Button(onClick = { }, modifier = Modifier.align(Alignment.End)) {
-                                Text("Активировать")
-                            }
-                        }
+                    AnimatedVisibility(visible = testDataCapCard) {
+                        ExceedDataLimitCard(
+                            onClick = { /*TODO*/ },
+                            turboModePrice = MagicConstants.TURBO_MODE_PRICE,
+                            turboModeGb = MagicConstants.TURBO_MODE_DATA_GB
+                        )
                     }
                 }
                 item {
@@ -264,5 +258,44 @@ fun AccountInfoCardItem(
             text = subtitle,
             color = LocalContentColor.current.copy(alpha = 0.7f)
         )
+    }
+}
+
+@Composable
+fun ExceedDataLimitCard(
+    onClick: () -> Unit,
+    turboModePrice: Int,
+    turboModeGb: Int,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = Modifier
+            .clip(MaterialTheme.shapes.large)
+            .background(MaterialTheme.colorScheme.surfaceContainer)
+    ) {
+        Column(modifier = Modifier.padding(12.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    imageVector = Icons.Rounded.NewReleases,
+                    null,
+                    tint = MaterialTheme.colorScheme.error
+                )
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    text = stringResource(R.string.exceed_data),
+                    style = MaterialTheme.typography.titleMedium.copy(fontSize = 18.sp)
+                )
+            }
+            Spacer(Modifier.height(4.dp))
+            Text(stringResource(R.string.activate_turbo_hint, turboModeGb, turboModePrice))
+            Button(onClick = { }, modifier = Modifier.align(Alignment.End)) {
+                Icon(
+                    imageVector = Icons.Rounded.RocketLaunch,
+                    contentDescription = null
+                )
+                Spacer(modifier = Modifier.width(ButtonDefaults.IconSpacing))
+                Text(stringResource(R.string.action_activate))
+            }
+        }
     }
 }

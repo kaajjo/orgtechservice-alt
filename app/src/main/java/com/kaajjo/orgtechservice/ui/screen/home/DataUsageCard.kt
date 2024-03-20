@@ -39,14 +39,13 @@ import com.kaajjo.orgtechservice.ui.theme.combineColors
 import com.kaajjo.orgtechservice.ui.theme.harmonize
 import com.kaajjo.orgtechservice.ui.theme.toPalette
 import com.kaajjo.orgtechservice.utils.formatter.DataSizeFormatter
-import java.text.DecimalFormat
-import java.util.Formatter
 
 @Composable
 fun DataUsageCard(
     dataUsed: Float,
     dataTotal: Float,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = { }
 ) {
     val context = LocalContext.current
     val percent by remember(dataUsed, dataTotal) { mutableFloatStateOf(1f - dataUsed / dataTotal) }
@@ -79,7 +78,8 @@ fun DataUsageCard(
         colors = CardDefaults.cardColors(
             containerColor = harmonizedColor.container,
             contentColor = harmonizedColor.onContainer
-        )
+        ),
+        onClick = onClick
     ) {
         Box(
             modifier = Modifier
