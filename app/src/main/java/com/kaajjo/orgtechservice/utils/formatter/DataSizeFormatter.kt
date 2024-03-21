@@ -35,4 +35,12 @@ class DataSizeFormatter {
             unitsShort[digitsGroup]
         )
     }
+
+    fun bytesReadableToGb(
+        bytes: Float,
+        context: Context,
+        decimalFormat: DecimalFormat = DecimalFormat("0.##")
+    ): String {
+        return decimalFormat.format(bytes / 1024f / 1024f / 1024f) + " " + context.getString(R.string.unit_data_short_gibibyte)
+    }
 }

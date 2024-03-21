@@ -107,7 +107,7 @@ fun DataUsageCard(
             Column(
                 modifier = Modifier
                     .align(Alignment.Center)
-                    .padding(vertical = 28.dp),
+                    .padding(vertical = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
@@ -119,7 +119,13 @@ fun DataUsageCard(
                     text = stringResource(R.string.usage_data_left),
                     style = MaterialTheme.typography.labelMedium
                 )
-
+                Text(
+                    text = stringResource(
+                        R.string.usage_data_of_total,
+                        DataSizeFormatter().bytesReadableToGb(dataTotal, context = context)
+                    ),
+                    style = MaterialTheme.typography.labelSmall
+                )
             }
         }
     }
@@ -128,17 +134,17 @@ fun DataUsageCard(
 @Preview
 @Composable
 fun DataUsageCardBadPreview() {
-    DataUsageCard(dataUsed = 89f * 1024f, dataTotal = 100f * 1024f)
+    DataUsageCard(dataUsed = 89f * 1024f * 1024f * 1024f, dataTotal = 100f * 1024f * 1024f * 1024f)
 }
 
 @Preview
 @Composable
 fun DataUsageCardNotGoodPreview() {
-    DataUsageCard(dataUsed = 52f * 1024f, dataTotal = 100f * 1024f)
+    DataUsageCard(dataUsed = 52f * 1024f * 1024f * 1024f, dataTotal = 100f * 1024f * 1024f * 1024f)
 }
 
 @Preview
 @Composable
 fun DataUsageCardGoodPreview() {
-    DataUsageCard(dataUsed = 1f * 1024f, dataTotal = 100f * 1024f)
+    DataUsageCard(dataUsed = 1f * 1024f * 1024f * 1024f, dataTotal = 100f * 1024f * 1024f * 1024f)
 }

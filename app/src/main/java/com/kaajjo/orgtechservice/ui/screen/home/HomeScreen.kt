@@ -60,6 +60,9 @@ import com.kaajjo.orgtechservice.utils.formatter.DataSizeFormatter
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import korlibs.time.DateTime
+import korlibs.time.KlockLocale
+import korlibs.time.format
+import korlibs.time.locale.russian
 
 @Destination
 @Composable
@@ -85,11 +88,12 @@ fun HomeScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(16.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                        horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
                         AccountInfoCardItem(
                             title = DateTime(user.client.account.discountPeriod.end * 1000.0).format(
-                                "d MMMM"
+                                "d MMMM",
+                                KlockLocale.russian
                             ),
                             subtitle = stringResource(R.string.payment_day)
                         )
@@ -99,10 +103,6 @@ fun HomeScreen(
                                 context
                             ),
                             subtitle = stringResource(R.string.data_downloaded)
-                        )
-                        AccountInfoCardItem(
-                            title = user.client.userTariff.speed.toString() + " Мбит/с",
-                            subtitle = stringResource(R.string.internet_speed)
                         )
                     }
                     Spacer(modifier = Modifier.height(6.dp))
