@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Orgtechservice</string>
+    <string name="app_name" translatable="false">Оргтехсервис</string>
 
     <string name="action_logout">Выйти</string>
     <string name="action_apply">Применить</string>
@@ -58,4 +58,5 @@
     <string name="exceed_data">У вас закончился трафик</string>
     <string name="activate_turbo_hint">Активируйте турбо режим и получите %1$dГБ трафика за %2$d₽</string>
     <string name="action_activate">Активировать</string>
+    <string name="usage_data_of_total">из %1$s</string>
 </resources>
