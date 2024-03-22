@@ -1,8 +1,9 @@
 # Оргтехсервис
 ### NOTE: This is an alternative app for Russian internet service provider. That's why almost everything here is in Russian, sorry
-### 🏗️ Work in progress. Most of the code is written to just work. We are not talking about any architecture or good code yet. Let's call it a prototype, I'm just testing it to see if it works 🏗️
+### 🏗️ Work in progress. Most of the code is written to just work. We are not talking about good architecture or excellent code yet. Let's call it a prototype, I'm just testing it to see if it works 🏗️
 #### 16.03.2024 - Возобновляю проект спустя 7+ месяцев простоя
 <b>НЕОФИЦИАЛЬНОЕ</b> мобильное приложение для интернет-провайдера оргтехсервис.
+Официальное приложение можно найти в [Google Play](https://play.google.com/store/apps/details?id=com.orgtechservice.cabinet)
 
 <div>
   <img src="images/scr_home.png" width="25%" />
