@@ -48,6 +48,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -61,6 +62,7 @@ import com.kaajjo.orgtechservice.ui.component.collapsing_topappbar.CollapsingTit
 import com.kaajjo.orgtechservice.ui.component.collapsing_topappbar.CollapsingTopAppBar
 import com.kaajjo.orgtechservice.ui.component.collapsing_topappbar.rememberTopAppBarScrollBehavior
 import com.kaajjo.orgtechservice.ui.screen.destinations.LoginScreenDestination
+import com.kaajjo.orgtechservice.ui.theme.combineColors
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import korlibs.time.DateTime
@@ -172,7 +174,7 @@ fun AccountScreen(
                     AnimatedVisibility(visible = isExpanded) {
                         Column {
                             Spacer(modifier = Modifier.height(12.dp))
-                            activeSessions.forEach {
+                            activeSessions.sortedBy { it.value != viewModel.userApiKey }.forEach {
                                 ActiveSessionItem(
                                     session = it,
                                     currentKey = viewModel.userApiKey,
@@ -317,10 +319,24 @@ fun ActiveSessionItem(
             )
         }
         if (session.value == currentKey) {
-            Text(
-                text = stringResource(R.string.other_devices_this_device),
-                style = MaterialTheme.typography.bodySmall
-            )
+            Box(
+                modifier = Modifier
+                    .clip(MaterialTheme.shapes.small)
+                    .background(
+                        combineColors(
+                            Color.Green,
+                            MaterialTheme.colorScheme.primaryContainer,
+                            0.9f
+                        )
+                    )
+            ) {
+                Text(
+                    text = stringResource(R.string.other_devices_this_device),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = combineColors(Color.Green, MaterialTheme.colorScheme.onPrimaryContainer, 0.85f),
+                    modifier = Modifier.padding(4.dp)
+                )
+            }
         } else {
             IconButton(onClick = onLogoutClick) {
                 Icon(
