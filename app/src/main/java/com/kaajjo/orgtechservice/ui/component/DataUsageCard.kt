@@ -1,4 +1,4 @@
-package com.kaajjo.orgtechservice.ui.screen.home
+package com.kaajjo.orgtechservice.ui.component
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
