@@ -7,8 +7,8 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import com.kaajjo.materialcolors.blend.Blend
-import com.kaajjo.materialcolors.palettes.CorePalette
+import com.materialkolor.blend.Blend
+import com.materialkolor.palettes.CorePalette
 import kotlin.math.ceil
 import kotlin.math.floor
 
