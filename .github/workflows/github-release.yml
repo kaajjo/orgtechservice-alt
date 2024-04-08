@@ -45,5 +45,5 @@ jobs:
   # Upload your signed file if you want
       - uses: actions/upload-artifact@v3
         with:
-          name: Signed app bundle
+          name: release.apk
           path: ${{steps.sign_app.outputs.signedFile}}
