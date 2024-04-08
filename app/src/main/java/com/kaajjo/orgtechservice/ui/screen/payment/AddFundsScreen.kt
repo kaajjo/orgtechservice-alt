@@ -19,6 +19,8 @@ import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.CreditCard
 import androidx.compose.material.icons.rounded.CurrencyRuble
 import androidx.compose.material.icons.rounded.History
+import androidx.compose.material.icons.rounded.Money
+import androidx.compose.material.icons.rounded.RocketLaunch
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -37,6 +39,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -145,7 +148,7 @@ fun AddFundsScreen(
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Image(
-                            painter = painterResource(id = R.drawable.sbp_logo),
+                            painter = rememberVectorPainter(image = Icons.Rounded.Money),
                             contentDescription = "СБП",
                             modifier = Modifier.padding(16.dp)
                         )
@@ -178,16 +181,10 @@ fun AddFundsScreen(
                 }
             }
 
-            /*userInfo?.let {
-                Spacer(modifier = Modifier.height(8.dp))
-                ItemRowBigIcon(
-                    title = "Текущий баланс ${it.account.balance}₽",
-                    icon = Icons.Rounded.AccountBalanceWallet
-                )
-            }*/
-
-            Column(modifier = Modifier.padding(horizontal = 12.dp)) {
-                Spacer(modifier = Modifier.height(8.dp))
+            Column(
+                modifier = Modifier.padding(horizontal = 12.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
                 ItemRowBigIcon(
                     title = stringResource(id = R.string.payment_history_title),
                     icon = Icons.Rounded.History,
@@ -203,12 +200,16 @@ fun AddFundsScreen(
                     },
                     onClick = { destinationsNavigator.navigate(PaymentsHistoryScreenDestination) }
                 )
-
-                Spacer(modifier = Modifier.height(8.dp))
                 ItemRowBigIcon(
                     title = "Обещанный платеж",
                     subtitle = "Пополнить баланс за счет оператора сроком на 3 дня",
                     icon = Icons.Rounded.CreditCard
+                )
+                ItemRowBigIcon(
+                    title = "Турбо режим",
+                    subtitle = "Активировать дополнительный пакет трафика. История активаций",
+                    onClick = { },
+                    icon = Icons.Rounded.RocketLaunch
                 )
             }
         }
