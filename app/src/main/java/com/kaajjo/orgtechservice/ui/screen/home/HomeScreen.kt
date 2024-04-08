@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -42,6 +43,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -50,12 +52,14 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kaajjo.orgtechservice.R
 import com.kaajjo.orgtechservice.data.MagicConstants
+import com.kaajjo.orgtechservice.ui.component.DataUsageCard
 import com.kaajjo.orgtechservice.ui.component.ItemRowBigIcon
 import com.kaajjo.orgtechservice.ui.screen.destinations.AccountScreenDestination
 import com.kaajjo.orgtechservice.ui.screen.destinations.AddFundsScreenDestination
 import com.kaajjo.orgtechservice.ui.screen.destinations.PaymentsHistoryScreenDestination
 import com.kaajjo.orgtechservice.ui.screen.destinations.TariffScreenDestination
 import com.kaajjo.orgtechservice.ui.screen.destinations.TrafficMonthlyScreenDestination
+import com.kaajjo.orgtechservice.ui.theme.combineColors
 import com.kaajjo.orgtechservice.utils.formatter.DataSizeFormatter
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -77,6 +81,25 @@ fun HomeScreen(
 
     Scaffold { paddingValues ->
         Column(Modifier.padding(paddingValues)) {
+            Box(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .clip(MaterialTheme.shapes.small)
+                    .background(
+                        combineColors(
+                            Color.Red,
+                            MaterialTheme.colorScheme.primaryContainer,
+                            0.8f
+                        )
+                    )
+            ) {
+                Text(
+                    text = stringResource(R.string.work_in_progress),
+                    style = MaterialTheme.typography.titleSmall,
+                    color = combineColors(Color.Red, MaterialTheme.colorScheme.onPrimaryContainer, 0.8f),
+                    modifier = Modifier.padding(4.dp)
+                )
+            }
             viewModel.user?.let { user ->
                 OutlinedCard(
                     modifier = Modifier
