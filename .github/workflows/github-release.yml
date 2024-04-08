@@ -1,12 +1,13 @@
-name: Build Release APK and Create Draft Github Release
+name: Build Release APK
 on:
   push:
-    tags:
-      - v*
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build_and_release:
-    name: Build Release APK and Create Draft Release
+    name: Build Release APK
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
