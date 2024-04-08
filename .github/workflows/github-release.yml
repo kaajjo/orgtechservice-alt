@@ -31,11 +31,19 @@ jobs:
       - name: Build Release APK
         run: ./gradlew assembleRelease
 
-      - name: Sign Release APK
-        uses: r0adkll/sign-android-release@f30bdd30588842ac76044ecdbd4b6d0e3e813478
+      - uses: ilharp/sign-android-release@v1 # Or use @nightly
+        name: Sign app APK
+        id: sign_app
         with:
-          releaseDirectory: app/build/outputs/apk/release
-          signingKeyBase64: ${{ secrets.KEYSTORE }}
-          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
-          alias: ${{ secrets.KEY_ALIAS }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
+          releaseDir: app/build/outputs/apk/release
+          signingKey: ${{ secrets.SIGNINGKEYBASE64 }}
+          keyAlias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEYSTOREPASSWORD }}
+          keyPassword: ${{ secrets.KEYPASSWORD }}
+          buildToolsVersion: 33.0.0
+
+  # Upload your signed file if you want
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Signed app bundle
+          path: ${{steps.sign_app.outputs.signedFile}}
